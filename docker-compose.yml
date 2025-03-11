@@ -1,0 +1,56 @@
+services:
+  neo4j:
+    image: neo4j:5.22.0
+    container_name: neo4j
+    environment:
+      NEO4J_AUTH: neo4j/12345678
+    ports:
+      - "7687:7687"  # Bolt
+      - "7474:7474"  # HTTP
+    volumes:
+      - neo4j_data:/data
+    networks:
+      - mynetwork
+
+  data_origin:
+    build:
+      context: ./data_origin
+      dockerfile: Dockerfile
+    volumes:
+      - datos:/datos
+    depends_on:
+      - neo4j
+    networks:
+      - mynetwork
+
+  #frontend:
+    #build:
+     # context: ./frontend
+      #dockerfile: Dockerfile
+    #ports:
+     # - "3000:3000"
+    #depends_on:
+     # - backend
+    #networks:
+     # - mynetwork
+
+  #backend:
+   # build:
+    #  context: ./backend
+     # dockerfile: Dockerfile
+    #ports:
+     # - "5000:5000"
+    #environment:
+     # - FLASK_ENV=production
+    #depends_on:
+     # - neo4j
+    #networks:
+     # - mynetwork
+
+volumes:
+  datos:
+  neo4j_data:
+
+networks:
+  mynetwork:
+    driver: bridge
