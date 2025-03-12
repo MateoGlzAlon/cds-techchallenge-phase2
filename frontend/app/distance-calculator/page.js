@@ -45,7 +45,7 @@ export default function DistanceCalculator() {
       <Card className="shadow-lg">
         <CardHeader>
           <CardTitle className="flex items-center">
-            <Calculator className="mr-2 h-5 w-5" />
+            <Calculator className="mr-2 h-5 w-5 " />
             Calculate Distance
           </CardTitle>
           <CardDescription>Enter the origin and destination to calculate the distance between them.</CardDescription>
@@ -124,7 +124,7 @@ export default function DistanceCalculator() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button onClick={calculateDistance} disabled={isLoading} className="w-full">
+          <Button onClick={calculateDistance} disabled={isLoading} className="w-full border-[0.5px] border-green-300 py-2 hover:bg-green-100">
             {isLoading ? "Calculating..." : "Calculate Distance"}
           </Button>
         </CardFooter>
@@ -144,7 +144,7 @@ export default function DistanceCalculator() {
                 <div className="text-sm text-gray-500">
                   Distance: <span className="font-semibold text-gray-700">{route.distance} min</span>
                 </div>
-                <Button variant="outline" size="sm" className="mt-4 w-full">
+                <Button variant="outline" size="sm" className="mt-4 w-full py-2">
                   View Details
                 </Button>
               </CardContent>

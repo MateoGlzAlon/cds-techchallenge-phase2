@@ -42,7 +42,7 @@ export default function Community() {
                 </div>
               </CardContent>
               <CardFooter className="bg-gray-50 px-6 py-3">
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full py-2">
                   View Event
                 </Button>
               </CardFooter>

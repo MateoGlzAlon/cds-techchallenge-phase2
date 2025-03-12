@@ -68,7 +68,7 @@ export default function Routes() {
             </CardContent>
             <CardFooter className="bg-gray-50 px-6 py-4">
               <Link href={`/routes/${route.id}`} className="w-full">
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full py-2">
                   View Details
                 </Button>
               </Link>

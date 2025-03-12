@@ -142,7 +142,7 @@ export default function Hotels() {
             </CardContent>
             <CardFooter className="bg-gray-50 px-6 py-4">
               <Link href={`/hotels/${hotel.id}`} className="w-full">
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full py-2">
                   View Details
                 </Button>
               </Link>
