@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-32  ">
           <div className="col-span-1">
             <div className="flex items-center">
-              <Map className="h-8 w-8 text-blue-600" />
+              <Map className="h-8 w-8 text-green-600" />
               <span className="ml-2 text-xl font-bold text-gray-900">{DATA.appName}</span>
             </div>
             <p className="mt-2 text-sm text-gray-500">

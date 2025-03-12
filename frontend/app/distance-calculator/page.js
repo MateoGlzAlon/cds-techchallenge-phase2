@@ -62,7 +62,7 @@ export default function DistanceCalculator() {
                     <MapPin className="h-5 w-5 text-gray-400" />
                   </div>
                   <select
-                    className="pl-10 w-full p-3 bg-white border border-gray-300 rounded-md shadow-sm text-sm hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="pl-10 w-full p-3 bg-white border border-gray-300 rounded-md shadow-sm text-sm hover:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
                     value={origin}
                     onChange={(e) => handleFilterChange(setOrigin, e.target.value)}
                   >
@@ -86,7 +86,7 @@ export default function DistanceCalculator() {
                     <MapPin className="h-5 w-5 text-gray-400" />
                   </div>
                   <select
-                    className="pl-10 w-full p-3 bg-white border border-gray-300 rounded-md shadow-sm text-sm hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="pl-10 w-full p-3 bg-white border border-gray-300 rounded-md shadow-sm text-sm hover:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
                     value={destination}
                     onChange={(e) => handleFilterChange(setDestination, e.target.value)}
                   >
@@ -101,21 +101,21 @@ export default function DistanceCalculator() {
             {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
 
             {distance && (
-              <Card className="mt-6 bg-blue-50">
+              <Card className="mt-6 bg-green-50">
                 <CardContent className="pt-6">
                   <h3 className="text-lg font-medium text-gray-900 mb-4">Distance Results</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                       <div className="text-sm text-gray-500">Distance (km)</div>
-                      <div className="text-2xl font-bold text-blue-600">{distance.kilometers} km</div>
+                      <div className="text-2xl font-bold text-green-600">{distance.kilometers} km</div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                       <div className="text-sm text-gray-500">Distance (miles)</div>
-                      <div className="text-2xl font-bold text-blue-600">{distance.miles} mi</div>
+                      <div className="text-2xl font-bold text-green-600">{distance.miles} mi</div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                       <div className="text-sm text-gray-500">Est. Drive Time</div>
-                      <div className="text-2xl font-bold text-blue-600">{distance.estimatedDriveTime}</div>
+                      <div className="text-2xl font-bold text-green-600">{distance.estimatedDriveTime}</div>
                     </div>
                   </div>
                 </CardContent>

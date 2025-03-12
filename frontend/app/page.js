@@ -9,18 +9,18 @@ export default function Home() {
     <div>
       {/* Hero Section */}
       <section className="relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-700 opacity-90"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-indigo-700 opacity-90"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
           <div className="max-w-3xl">
             <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
               Discover Your Next Adventure
             </h1>
-            <p className="mt-6 text-xl text-blue-100 max-w-3xl">
+            <p className="mt-6 text-xl text-green-100 max-w-3xl">
               Plan your journey, find the best routes, and book amazing accommodations all in one place.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
               <Link href="/routes">
-                <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50">
+                <Button size="lg" className="bg-white text-green-600 hover:bg-green-50">
                   Explore Routes
                 </Button>
               </Link>
@@ -47,8 +47,8 @@ export default function Home() {
           <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             <Card>
               <CardContent className="p-6 flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-4">
-                  <Calculator className="h-6 w-6 text-blue-600" />
+                <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mb-4">
+                  <Calculator className="h-6 w-6 text-green-600" />
                 </div>
                 <h3 className="text-lg font-medium text-gray-900">Distance Calculator</h3>
                 <p className="mt-2 text-sm text-gray-500">
@@ -56,7 +56,7 @@ export default function Home() {
                 </p>
                 <Link
                   href="/distance-calculator"
-                  className="mt-4 text-blue-600 hover:text-blue-800 text-sm font-medium"
+                  className="mt-4 text-green-600 hover:text-green-800 text-sm font-medium"
                 >
                   Calculate Now →
                 </Link>
@@ -65,14 +65,14 @@ export default function Home() {
 
             <Card>
               <CardContent className="p-6 flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-4">
-                  <Map className="h-6 w-6 text-blue-600" />
+                <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mb-4">
+                  <Map className="h-6 w-6 text-green-600" />
                 </div>
                 <h3 className="text-lg font-medium text-gray-900">Community Routes</h3>
                 <p className="mt-2 text-sm text-gray-500">
                   Create and join community routes to discover hidden gems and local favorites.
                 </p>
-                <Link href="/community" className="mt-4 text-blue-600 hover:text-blue-800 text-sm font-medium">
+                <Link href="/community" className="mt-4 text-green-600 hover:text-green-800 text-sm font-medium">
                   Explore Community →
                 </Link>
               </CardContent>
@@ -80,14 +80,14 @@ export default function Home() {
 
             <Card>
               <CardContent className="p-6 flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-4">
-                  <Hotel className="h-6 w-6 text-blue-600" />
+                <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mb-4">
+                  <Hotel className="h-6 w-6 text-green-600" />
                 </div>
                 <h3 className="text-lg font-medium text-gray-900">Hotel Listings</h3>
                 <p className="mt-2 text-sm text-gray-500">
                   Find and book the perfect accommodations for your travel needs.
                 </p>
-                <Link href="/hotels" className="mt-4 text-blue-600 hover:text-blue-800 text-sm font-medium">
+                <Link href="/hotels" className="mt-4 text-green-600 hover:text-green-800 text-sm font-medium">
                   Find Hotels →
                 </Link>
               </CardContent>
@@ -95,8 +95,8 @@ export default function Home() {
 
             <Card>
               <CardContent className="p-6 flex flex-col items-center text-center">
-                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-4">
-                  <Users className="h-6 w-6 text-blue-600" />
+                <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mb-4">
+                  <Users className="h-6 w-6 text-green-600" />
                 </div>
                 <h3 className="text-lg font-medium text-gray-900">Business Dashboard</h3>
                 <p className="mt-2 text-sm text-gray-500">

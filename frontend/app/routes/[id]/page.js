@@ -33,7 +33,7 @@ export default function RouteDetails() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
       <div className="mb-6">
-        <Link href="/routes" className="text-blue-600 hover:text-blue-800 flex items-center">
+        <Link href="/routes" className="text-green-600 hover:text-green-800 flex items-center">
           <ArrowLeft className="h-4 w-4 mr-1" />
           Back to Routes
         </Link>

@@ -42,7 +42,7 @@ export default function Routes() {
 
               <div className="mt-4 flex flex-wrap gap-2">
                 {route.tags.map((tag, index) => (
-                  <Badge key={index} variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                  <Badge key={index} variant="outline" className="bg-green-50 text-green-700 border-green-200">
                     {tag}
                   </Badge>
                 ))}

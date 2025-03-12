@@ -65,7 +65,7 @@ export default function Hotels() {
                 Price Range
               </label>
               <select
-                className="w-full p-3 bg-white border border-gray-300 rounded-md shadow-sm text-sm hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 bg-white border border-gray-300 rounded-md shadow-sm text-sm hover:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
                 value={priceFilter}
                 onChange={(e) => handleFilterChange(setPriceFilter, e.target.value)}
               >
@@ -80,7 +80,7 @@ export default function Hotels() {
                 Rating
               </label>
               <select
-                className="w-full p-3 bg-white border border-gray-300 rounded-md shadow-sm text-sm hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-3 bg-white border border-gray-300 rounded-md shadow-sm text-sm hover:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
                 value={ratingFilter}
                 onChange={(e) => handleFilterChange(setRatingFilter, e.target.value)}
               >
@@ -133,7 +133,7 @@ export default function Hotels() {
               </div>
 
               <div className="mt-4 flex justify-between items-center">
-                <div className="text-lg font-bold text-blue-600">
+                <div className="text-lg font-bold text-green-600">
                   {hotel.price}
                   <span className="text-sm font-normal text-gray-500">/night</span>
                 </div>

@@ -64,7 +64,7 @@ export default function Register() {
     <div className="max-w-md mx-auto px-4 py-12">
       <div className="flex justify-center mb-8">
         <Link href="/" className="flex items-center">
-          <Map className="h-8 w-8 text-blue-600" />
+          <Map className="h-8 w-8 text-green-600" />
           <span className="ml-2 text-2xl font-bold text-gray-900">{DATA.appName}</span>
         </Link>
       </div>
@@ -143,7 +143,7 @@ export default function Register() {
                       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
                       I agree to the{" "}
-                      <Link href="/terms" className="text-blue-600 hover:text-blue-800">
+                      <Link href="/terms" className="text-green-600 hover:text-green-800">
                         terms and conditions
                       </Link>
                     </label>
@@ -163,11 +163,11 @@ export default function Register() {
                 </Button>
                 <p className="text-center text-sm text-gray-500">
                   By continuing with Google, you agree to our{" "}
-                  <Link href="/terms" className="text-blue-600 hover:text-blue-800">
+                  <Link href="/terms" className="text-green-600 hover:text-green-800">
                     Terms of Service
                   </Link>{" "}
                   and{" "}
-                  <Link href="/privacy" className="text-blue-600 hover:text-blue-800">
+                  <Link href="/privacy" className="text-green-600 hover:text-green-800">
                     Privacy Policy
                   </Link>
                   .
@@ -182,11 +182,11 @@ export default function Register() {
                 </Button>
                 <p className="text-center text-sm text-gray-500">
                   By continuing with Facebook, you agree to our{" "}
-                  <Link href="/terms" className="text-blue-600 hover:text-blue-800">
+                  <Link href="/terms" className="text-green-600 hover:text-green-800">
                     Terms of Service
                   </Link>{" "}
                   and{" "}
-                  <Link href="/privacy" className="text-blue-600 hover:text-blue-800">
+                  <Link href="/privacy" className="text-green-600 hover:text-green-800">
                     Privacy Policy
                   </Link>
                   .
@@ -198,7 +198,7 @@ export default function Register() {
         <CardFooter className="flex flex-col space-y-4">
           <div className="text-center text-sm">
             Already have an account?{" "}
-            <Link href="/login" className="text-blue-600 hover:text-blue-800 font-medium">
+            <Link href="/login" className="text-green-600 hover:text-green-800 font-medium">
               Sign in
             </Link>
           </div>

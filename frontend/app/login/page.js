@@ -56,7 +56,7 @@ export default function Login() {
     <div className="max-w-md mx-auto px-4 py-12">
       <div className="flex justify-center mb-8">
         <Link href="/" className="flex items-center">
-          <Map className="h-8 w-8 text-blue-600" />
+          <Map className="h-8 w-8 text-green-600" />
           <span className="ml-2 text-2xl font-bold text-gray-900">{DATA.appName}</span>
         </Link>
       </div>
@@ -83,7 +83,7 @@ export default function Login() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
-                <Link href="/forgot-password" className="text-sm text-blue-600 hover:text-blue-800">
+                <Link href="/forgot-password" className="text-sm text-green-600 hover:text-green-800">
                   Forgot password?
                 </Link>
               </div>
@@ -135,7 +135,7 @@ export default function Login() {
         <CardFooter className="flex flex-col space-y-4">
           <div className="text-center text-sm">
             Don't have an account?{" "}
-            <Link href="/register" className="text-blue-600 hover:text-blue-800 font-medium">
+            <Link href="/register" className="text-green-600 hover:text-green-800 font-medium">
               Sign up
             </Link>
           </div>
