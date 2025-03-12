@@ -9,23 +9,23 @@ export default function Home() {
     <div>
       {/* Hero Section */}
       <section className="relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-indigo-700 opacity-90"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-indigo-700 opacity-100"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
           <div className="max-w-3xl">
             <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Discover Your Next Adventure
+              Discover Your Next Adventure in Green Lake
             </h1>
             <p className="mt-6 text-xl text-green-100 max-w-3xl">
               Plan your journey, find the best routes, and book amazing accommodations all in one place.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
               <Link href="/routes">
-                <Button size="lg" className="bg-white text-green-600 hover:bg-green-50">
+                <Button size="lg" className="bg-white text-green-600 px-4 py-2 hover:bg-green-50">
                   Explore Routes
                 </Button>
               </Link>
               <Link href="/hotels">
-                <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10">
+                <Button size="lg" variant="outline" className="text-green-600 border-white px-4 py-2">
                   Find Hotels
                 </Button>
               </Link>
