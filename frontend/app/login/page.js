@@ -83,9 +83,6 @@ export default function Login() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
-                <Link href="/forgot-password" className="text-sm text-green-600 hover:text-green-800">
-                  Forgot password?
-                </Link>
               </div>
               <Input
                 id="password"
@@ -111,7 +108,7 @@ export default function Login() {
                 Remember me
               </label>
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full border-[0.5px] border-green-300 py-2 hover:bg-green-100">
               Sign In
             </Button>
           </form>

@@ -76,10 +76,9 @@ export default function Register() {
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="email" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-4">
+            <TabsList className="grid w-full grid-cols-2 mb-4">
               <TabsTrigger value="email">Email</TabsTrigger>
               <TabsTrigger value="google">Google</TabsTrigger>
-              <TabsTrigger value="facebook">Facebook</TabsTrigger>
             </TabsList>
             <TabsContent value="email">
               <form onSubmit={handleSubmit}>
@@ -149,7 +148,7 @@ export default function Register() {
                     </label>
                   </div>
                   {errors.agreeTerms && <p className="text-sm text-red-500">{errors.agreeTerms}</p>}
-                  <Button type="submit" className="w-full">
+                  <Button type="submit" className="w-full border-[0.5px] border-green-300 py-2 hover:bg-green-100">
                     Create Account
                   </Button>
                 </div>
@@ -157,7 +156,7 @@ export default function Register() {
             </TabsContent>
             <TabsContent value="google">
               <div className="space-y-4">
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full py-3 hover:bg-blue-100">
                   <Mail className="mr-2 h-4 w-4" />
                   Continue with Google
                 </Button>
