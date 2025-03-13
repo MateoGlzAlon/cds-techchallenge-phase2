@@ -279,6 +279,20 @@ export const DATA = {
             status: "Confirmed",
             total: "$1,743",
         },
-    ]
+    ],
+
+    mockHotelDetailPage: {
+        id: 1,
+        name: "Alletra Diamond Grand Hotel",
+        location: "Green Lake",
+        description: "Luxury hotel with stunning views of the lake.",
+        price: "$299",
+        rating: 4.8,
+        reviews: 324,
+        image: "/placeholder.svg?height=300&width=500",
+        rooms: 120,
+        occupancy: "78%",
+        revenue: "$45,890",
+    },
 
 }

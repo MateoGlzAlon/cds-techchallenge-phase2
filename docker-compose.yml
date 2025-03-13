@@ -5,8 +5,8 @@ services:
     environment:
       NEO4J_AUTH: neo4j/12345678
     ports:
-      - "7687:7687"  # Bolt
-      - "7474:7474"  # HTTP
+      - "7687:7687" # Bolt
+      - "7474:7474" # HTTP
     volumes:
       - neo4j_data:/data
     networks:
@@ -22,34 +22,35 @@ services:
       - neo4j
     networks:
       - mynetwork
+    command: [ "/bin/sh", "-c", "sleep 20 && python import.py" ]
 
-  #frontend:
-    #build:
-     # context: ./frontend
-      #dockerfile: Dockerfile
-    #ports:
-     # - "3000:3000"
-    #depends_on:
-     # - backend
-    #networks:
-     # - mynetwork
-
-  #backend:
-   # build:
-    #  context: ./backend
-     # dockerfile: Dockerfile
-    #ports:
-     # - "5000:5000"
-    #environment:
-     # - FLASK_ENV=production
-    #depends_on:
-     # - neo4j
-    #networks:
-     # - mynetwork
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+      #depends_on:
+      #- backend
+    networks:
+      - mynetwork
+      #backend:
+      # build:
+      #  context: ./backend
+      # dockerfile: Dockerfile
+      #ports:
+      # - "5000:5000"
+      #environment:
+      # - FLASK_ENV=production
+      #depends_on:
+      # - neo4j
+      #networks:
+      # - mynetwork
 
 volumes:
   datos:
   neo4j_data:
+
 
 networks:
   mynetwork:
