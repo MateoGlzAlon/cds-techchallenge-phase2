@@ -1,0 +1,57 @@
+# --- Global ---
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+*.log
+node_modules/
+dist/
+build/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# --- Frontend (Next.js + React) ---
+frontend/.next/
+frontend/out/
+frontend/.turbo/
+frontend/.eslintcache
+frontend/.parcel-cache/
+frontend/yarn.lock
+frontend/package-lock.json
+frontend/.pnp/
+frontend/.pnp.js
+frontend/npm-debug.log
+frontend/yarn-debug.log
+frontend/yarn-error.log
+
+# --- Backend (Spring Boot) ---
+backend/target/
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+backend/pom.xml.tag
+backend/pom.xml.releaseBackup
+backend/.settings/
+backend/.classpath
+backend/.project
+backend/HELP.md
+backend/logs/
+backend/*.log
+backend/.idea/
+backend/.gradle/
+backend/gradle/
+backend/gradlew
+backend/gradlew.bat
+
+# --- IDE / Editor Specific ---
+.vscode/
+*.swp
+*.swo
+*.swn
+
+# --- OS Specific ---
+**/.DS_Store
+**/Thumbs.db
