@@ -1,21 +1,37 @@
-.venv/
-venv/
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-.env
-*.env
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
 
-__pycache__/
-*.py[cod]
-*.so
-
-data/
-*.log
-
-Pipfile
-Pipfile.lock
-poetry.lock
-
-
-.vscode/
-.idea/
+### IntelliJ IDEA ###
+.idea
+*.iws
 *.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
