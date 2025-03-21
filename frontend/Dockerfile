@@ -9,6 +9,9 @@ COPY package.json ./
 
 # RUN npm update && npm install
 RUN npm install
+RUN npm install openai
+RUN npm install dotenv
+RUN npm install axios
 
 FROM base AS builder
 WORKDIR /app
