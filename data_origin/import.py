@@ -25,18 +25,11 @@ df_sostenibilidad.columns = df_sostenibilidad.columns.str.strip().str.lower()
 df_rutas.columns = df_rutas.columns.str.strip().str.lower()
 df_transporte.columns = df_transporte.columns.str.strip().str.lower()
 
-
-print("Columnas en df_rutas:", df_rutas.columns.tolist())
-print("Columnas en df_transporte:", df_transporte.columns.tolist())
-
-
 # Unir los datos por hotel y fecha
 df_merged = pd.merge(df_ocupacion, df_sostenibilidad, on=["hotel_nombre", "fecha"], how="inner")
 
 # Verificar si la fusión tiene datos
-print(f"Filas en df_merged: {df_merged.shape[0]}")
 if df_merged.empty:
-    print("Error: No hay coincidencias entre los archivos. Verifica que las fechas y nombres de hotel coincidan exactamente.")
     exit()
 
 # Conectar a Neo4j
@@ -91,18 +84,21 @@ with driver.session() as session:
         print(f"Insertando fecha {row['fecha']} para hotel {row['hotel_nombre']}")
         session.write_transaction(create_date_nodes, row)
 '''
-    puntos = set(df_transporte["origen"]).union(set(df_transporte["destino"]))
+    puntos = set(normalizar_nombre(p) for p in df_transporte["origen"]).union(
+              set(normalizar_nombre(p) for p in df_transporte["destino"]))
     for punto in puntos:
-        session.write_transaction(create_punto_node, punto)
-    
-    # Crear relaciones RUTA
-    for _, row in df_transporte.iterrows():
-        origen = row["origen"]
-        destino = row["destino"]
-        num_usuarios = row.get("num_usuarios", None)
-        duracion = row.get("duracion", None)
-        tipo_transporte = row.get("tipo_transporte", None)
+        session.execute_write(create_punto_node, punto)
 
-        session.write_transaction(create_ruta_relationship, origen, destino, num_usuarios, duracion, tipo_transporte)
+    # Insertar relaciones RUTA normalizadas
+    for _, row in df_transporte.iterrows():
+        origen = normalizar_nombre(row["origen"])
+        destino = normalizar_nombre(row["destino"])
+        num_usuarios = row.get("num_usuarios")
+        duracion = row.get("duracion")
+        tipo_transporte = row.get("tipo_transporte")
+
+        session.execute_write(create_ruta_relationship, origen, destino, num_usuarios, duracion, tipo_transporte)
+
+
 driver.close()
 print("Importación completada con éxito.")

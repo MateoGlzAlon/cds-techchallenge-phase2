@@ -30,22 +30,22 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-      #depends_on:
-      #- backend
+    depends_on:
+      - backend
     networks:
       - mynetwork
-      #backend:
-      # build:
-      #  context: ./backend
-      # dockerfile: Dockerfile
-      #ports:
-      # - "5000:5000"
-      #environment:
-      # - FLASK_ENV=production
-      #depends_on:
-      # - neo4j
-      #networks:
-      # - mynetwork
+  backend:
+      build:
+        context: ./backend
+        dockerfile: Dockerfile
+      ports:
+       - "5000:5000"
+      environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      depends_on:
+        - neo4j
+      networks:
+        - mynetwork
 
 volumes:
   datos:
