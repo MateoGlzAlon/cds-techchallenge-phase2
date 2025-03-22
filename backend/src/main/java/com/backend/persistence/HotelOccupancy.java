@@ -1,0 +1,45 @@
+package com.backend.persistence;
+
+import java.util.UUID;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.neo4j.core.schema.GeneratedValue;
+import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Property;
+import org.springframework.data.neo4j.core.schema.Relationship;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Node("Fecha")
+public class HotelOccupancy {
+
+    @Id
+    @GeneratedValue
+    private UUID id;
+
+    @Property("fecha")
+    private String date;
+
+    @Property("tasa_ocupacion")
+    private double occupancyRate;
+
+    @Property("reservas")
+    private int confirmedBookings;
+
+    @Property("cancelaciones")
+    private int cancellations;
+
+    @Property("precio_promedio")
+    private double averagePricePerNight;
+
+    @Relationship(type = "TIENE_OCUPACION", direction = Relationship.Direction.INCOMING)
+    private Hotel hotel;
+
+}
