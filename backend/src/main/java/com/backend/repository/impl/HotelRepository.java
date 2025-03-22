@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.backend.persistence.Hotel;
 
 @Repository
-public interface HotelRepository extends Neo4jRepository<Hotel, UUID> {
+public interface HotelRepository extends Neo4jRepository<Hotel, Long> {
     Hotel findByName(String name);
 
 }

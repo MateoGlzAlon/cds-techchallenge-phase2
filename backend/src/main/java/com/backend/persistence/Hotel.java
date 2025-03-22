@@ -22,11 +22,34 @@ import lombok.Setter;
 public class Hotel {
     @Id
     @GeneratedValue
-    private UUID id;
+    private Long id;
 
     @Property("nombre")
     private String name;
 
-    @Relationship(type = "TIENE_OCUPACION", direction = Relationship.Direction.OUTGOING)
+    /*@Relationship(type = "TIENE_OCUPACION", direction = Relationship.Direction.OUTGOING)
     private List<HotelOccupancy> occupancies;
-}
+*/
+    public Hotel() {}
+
+    public Hotel(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}  
