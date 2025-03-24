@@ -3,6 +3,7 @@ import "./globals.css"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { DATA } from "@/app/data"
+import Chatbot from "@/components/chatbot/chatbot";
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           <main className="flex-grow">{children}</main>
           <Footer />
+          <Chatbot />
         </div>
       </body>
     </html>
