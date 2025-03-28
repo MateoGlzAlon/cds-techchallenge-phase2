@@ -21,4 +21,9 @@ public class Location {
     @Relationship(type = "RUTA", direction = Relationship.Direction.OUTGOING)
     private List<Route> routes;
 
+    @Relationship(type = "TRAYECTO", direction = Relationship.Direction.OUTGOING)
+    private List<Trayecto> trayectos;
+
+    @Relationship(type = "INICIO", direction = Relationship.Direction.OUTGOING)
+    private List<Route> rutas;
 }

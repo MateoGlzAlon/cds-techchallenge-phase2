@@ -8,6 +8,7 @@ import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
 import org.springframework.data.neo4j.core.schema.Relationship;
+import org.springframework.data.annotation.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,10 +28,11 @@ public class Hotel {
     @Property("nombre")
     private String name;
 
-    /*@Relationship(type = "TIENE_OCUPACION", direction = Relationship.Direction.OUTGOING)
+    @Relationship(type = "TIENE_OCUPACION", direction = Relationship.Direction.OUTGOING)
+    @Transient
     private List<HotelOccupancy> occupancies;
-*/
-    public Hotel() {}
+
+    //public Hotel() {}
 
     public Hotel(Long id, String name) {
         this.id = id;

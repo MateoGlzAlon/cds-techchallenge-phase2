@@ -20,6 +20,7 @@ public class HotelController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Hotel>> getAllHotels() {
+        System.out.println("Entró al endpoint /api/v1/hotels/all");
         return ResponseEntity.ok(this.hotelService.getAllHotels());
     }
 

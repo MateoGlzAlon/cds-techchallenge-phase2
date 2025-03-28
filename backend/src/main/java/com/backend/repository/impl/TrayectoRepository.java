@@ -10,10 +10,5 @@ import com.backend.persistence.Location;
 import com.backend.persistence.Route;
 
 @Repository
-public interface RouteRepository extends Neo4jRepository<Route, UUID> {
-    Route findByRouteName(String routeName);
-    Route findByRouteType(String routeType);
-    Route findByDistanceKm(double distanceKm);
-    Route findByDurationHours(int durationHours);
-    Route findByPopularity(int popularity);   
+public interface TrayectoRepository extends Neo4jRepository<Route, UUID> { 
 }

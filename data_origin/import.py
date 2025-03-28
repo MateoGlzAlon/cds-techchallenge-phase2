@@ -62,11 +62,11 @@ def create_punto_node(tx, nombre):
     """
     tx.run(query, nombre=nombre)
 
-def create_ruta_relationship(tx, origen, destino, num_usuarios=None, duracion=None, tipo_transporte=None):
+def create_trayecto_relationship(tx, origen, destino, num_usuarios=None, duracion=None, tipo_transporte=None):
     query = """
     MATCH (o:Punto {nombre: $origen})
     MATCH (d:Punto {nombre: $destino})
-    MERGE (o)-[r:RUTA]->(d)
+    MERGE (o)-[r:TRAYECTO]->(d)
     SET r.num_usuarios = $num_usuarios,
         r.duracion = $duracion,
         r.tipo_transporte = $tipo_transporte
@@ -74,30 +74,62 @@ def create_ruta_relationship(tx, origen, destino, num_usuarios=None, duracion=No
     tx.run(query, origen=origen, destino=destino,
            num_usuarios=num_usuarios, duracion=duracion, tipo_transporte=tipo_transporte)
 
+def create_ruta_node(tx, row):
+    query = """
+    MERGE (r:Ruta {
+        ruta_nombre: $ruta_nombre,
+        tipo_ruta: $tipo_ruta,
+        longitud_km: $longitud_km,
+        duracion_hr: $duracion_hr,
+        popularidad: $popularidad
+    })
+    """
+    tx.run(query,
+           ruta_nombre=row["ruta_nombre"],
+           tipo_ruta=row["tipo_ruta"],
+           longitud_km=row["longitud_km"],
+           duracion_hr=row["duracion_hr"],
+           popularidad=row["popularidad"])
+    
+def link_punto_to_ruta(tx, punto_nombre, ruta_nombre):
+    query = """
+    MERGE (p:Punto {nombre: $punto_nombre})
+    WITH p
+    MATCH (r:Ruta {ruta_nombre: $ruta_nombre})
+    MERGE (p)-[:INICIO]->(r)
+    """
+    tx.run(query, punto_nombre=punto_nombre, ruta_nombre=ruta_nombre)
+    
 # Insertar datos en Neo4j
 with driver.session() as session:
-    '''hoteles = df_merged["hotel_nombre"].unique()
+    hoteles = df_merged["hotel_nombre"].unique()
     for hotel in hoteles:
         session.write_transaction(create_hotel_nodes, hotel)
     
     for _, row in df_merged.iterrows():
         print(f"Insertando fecha {row['fecha']} para hotel {row['hotel_nombre']}")
         session.write_transaction(create_date_nodes, row)
-'''
+
     puntos = set(normalizar_nombre(p) for p in df_transporte["origen"]).union(
               set(normalizar_nombre(p) for p in df_transporte["destino"]))
     for punto in puntos:
         session.execute_write(create_punto_node, punto)
 
-    # Insertar relaciones RUTA normalizadas
     for _, row in df_transporte.iterrows():
         origen = normalizar_nombre(row["origen"])
         destino = normalizar_nombre(row["destino"])
         num_usuarios = row.get("num_usuarios")
         duracion = row.get("duracion")
         tipo_transporte = row.get("tipo_transporte")
+        session.execute_write(create_trayecto_relationship, origen, destino, num_usuarios, duracion, tipo_transporte)
 
-        session.execute_write(create_ruta_relationship, origen, destino, num_usuarios, duracion, tipo_transporte)
+    for _, row in df_rutas.iterrows():
+        session.execute_write(create_ruta_node, row)
+
+    for _, row in df_rutas.iterrows():
+        origen = normalizar_nombre(row["origen_ruta"])
+        ruta_nombre = row["ruta_nombre"]
+        session.execute_write(link_punto_to_ruta, origen, ruta_nombre)
 
 
 driver.close()

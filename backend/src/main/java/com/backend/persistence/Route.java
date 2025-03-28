@@ -31,4 +31,5 @@ public class Route {
 
     @Relationship(type = "ORIGEN", direction = Relationship.Direction.OUTGOING)
     private Location origin;
+
 }

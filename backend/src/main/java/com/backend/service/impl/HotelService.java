@@ -18,6 +18,10 @@ public class HotelService {
         return this.hotelRepository.findByName(name);
     }
 
+/*************  ✨ Codeium Command ⭐  *************/
+    /**
+
+/******  bcc1ab1f-d69b-4582-8e12-325e1a75afa0  *******/
     public List<Hotel> getAllHotels() {
         return this.hotelRepository.findAll();
     }

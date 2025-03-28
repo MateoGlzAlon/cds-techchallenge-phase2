@@ -12,5 +12,5 @@ import com.backend.persistence.Location;
 @Repository
 public interface LocationRepository extends Neo4jRepository<Location, UUID> {
 
-    List<Location> findByName(String names);
+    List<Location> findByName(String name);
 }

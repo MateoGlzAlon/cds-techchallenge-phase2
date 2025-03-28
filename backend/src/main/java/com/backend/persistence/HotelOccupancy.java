@@ -39,6 +39,19 @@ public class HotelOccupancy {
     @Property("precio_promedio")
     private double averagePricePerNight;
 
+    @Property("consumo_energia_kwh")
+    private int energyConsumption;
+
+    @Property("residuos_generados_kg")
+    private int wasteGenerated;
+
+    @Property("porcentaje_reciclaje")
+    private double recyclingRate;
+
+    @Property("uso_agua_m3")
+    private int waterUsage;
+
+
     @Relationship(type = "TIENE_OCUPACION", direction = Relationship.Direction.INCOMING)
     private Hotel hotel;
 
