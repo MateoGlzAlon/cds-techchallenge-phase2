@@ -123,3 +123,5 @@ Si el usuario no proporciona un dato, deja su valor como null. Si para unos valo
 		return response
 	}
 }
+
+export default Chat;
