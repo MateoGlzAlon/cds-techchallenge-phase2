@@ -1,14 +1,13 @@
 package com.backend.persistence;
 
 import java.util.List;
-import java.util.UUID;
 
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
 import org.springframework.data.neo4j.core.schema.Relationship;
-import org.springframework.data.annotation.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,7 +31,22 @@ public class Hotel {
     @Transient
     private List<HotelOccupancy> occupancies;
 
-    //public Hotel() {}
+    @Property("valoracion_media")
+    private Double averageRating;
+
+    @Property("numero_resenas")
+    private Integer numberOfReviews;
+
+    @Property("descripcion")
+    private String description;
+
+    @Property("precio_noche")
+    private Double pricePerNight;
+
+    @Property("ubicacion")
+    private String location;
+
+    // public Hotel() {}
 
     public Hotel(Long id, String name) {
         this.id = id;
@@ -54,4 +68,4 @@ public class Hotel {
     public void setName(String name) {
         this.name = name;
     }
-}  
+}

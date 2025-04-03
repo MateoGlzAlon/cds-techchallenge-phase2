@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
 import { XMarkIcon, PaperAirplaneIcon, ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/solid"
+import Chat from "@/lib/chatService.mjs"
 
 type Message = {
   id: string
@@ -12,6 +13,9 @@ type Message = {
 }
 
 function Chatbot() {
+  const chat = new Chat()
+
+
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -47,19 +51,11 @@ function Chatbot() {
 
     try {
 
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: input }),
-      })
-
-      const data = await response.json()
-
+      const res = await chat.receiveMessage(input);
+      console.log(res)
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: data.response || "Lo siento, ha ocurrido un error al procesar tu solicitud.",
+        content: res || "Lo siento, ha ocurrido un error al procesar tu solicitud.",
         role: "assistant",
       }
       setMessages((prev) => [...prev, assistantMessage])

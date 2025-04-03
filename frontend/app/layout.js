@@ -1,16 +1,17 @@
-import { Inter } from "next/font/google"
-import "./globals.css"
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
-import { DATA } from "@/app/data"
+import "./globals.css";
+import { Inter } from "next/font/google";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
+import { DATA } from "@/app/data";
 import Chatbot from "@/components/chatbot/chatbot";
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: `${DATA.appName} - Find Your Next Adventur`,
-  description: "Discover amazing travel destinations, routes, and accommodations",
-}
+  description:
+    "Discover amazing travel destinations, routes, and accommodations",
+};
 
 export default function RootLayout({ children }) {
   return (
@@ -19,14 +20,10 @@ export default function RootLayout({ children }) {
         <div className="flex flex-col min-h-screen">
           <Navbar />
           <main className="flex-grow">{children}</main>
-          <Footer />
           <Chatbot />
+          <Footer />
         </div>
       </body>
     </html>
-  )
+  );
 }
-
-
-
-import './globals.css'
