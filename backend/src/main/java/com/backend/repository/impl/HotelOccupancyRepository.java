@@ -15,6 +15,4 @@ public interface HotelOccupancyRepository extends Neo4jRepository<HotelOccupancy
     HotelOccupancy findByConfirmedBookings(int confirmedBookings);
     HotelOccupancy findByCancellations(int cancellations);
     HotelOccupancy findByAveragePricePerNight(double averagePricePerNight);
-
-
 }

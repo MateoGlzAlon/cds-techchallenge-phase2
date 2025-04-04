@@ -1,5 +1,6 @@
 from neo4j import GraphDatabase
 import pandas as pd
+from tqdm import tqdm
 
 # Configuración de conexión a Neo4j
 URI = "bolt://neo4j:7687"
@@ -69,8 +70,8 @@ df_reviews = df_reviews.groupby("nombre_servicio").agg({
 }).rename(columns={"puntuacion": "average_rating", "comentario": "number_of_reviews"}).reset_index()
 
 df_final = pd.merge(df_hoteles, df_reviews, left_on="hotel_nombre", right_on="nombre_servicio", how="left")
-df_final["average_rating"].fillna(0, inplace=True)
-df_final["number_of_reviews"].fillna(0, inplace=True)
+df_final["average_rating"] = df_final["average_rating"].fillna(0)
+df_final["number_of_reviews"] = df_final["number_of_reviews"].fillna(0)
 
 def generate_description(hotel_name):
     return f"{hotel_name} es un destino ideal para viajeros que buscan comodidad y lujo. Sus instalaciones modernas y servicios de primera garantizan una estancia inolvidable."
@@ -161,10 +162,8 @@ def create_ruta_node(tx, row):
     
 def link_punto_to_ruta(tx, punto_nombre, ruta_nombre):
     query = """
+    MATCH (r:Ruta {ruta_nombre: $ruta_nombre})
     MERGE (p:Punto {nombre: $punto_nombre})
-    OPTIONAL MATCH (r:Ruta {ruta_nombre: $ruta_nombre})
-    WITH p, r
-    WHERE r IS NOT NULL
     MERGE (p)-[:INICIO]->(r)
     """
     tx.run(query, punto_nombre=punto_nombre, ruta_nombre=ruta_nombre)
@@ -197,38 +196,38 @@ def create_opinion_node(tx, row):
 
 # Insertar datos en Neo4j
 with driver.session() as session:
-    '''  for _, row in df_final.iterrows():
+    for _, row in tqdm(df_final.iterrows(), total=len(df_final), desc="Cargando hoteles en Neo4j"):
         session.write_transaction(create_hotel_properties, row)
     
-    for _, row in df_ocupacion.iterrows():
+    for _, row in tqdm(df_ocupacion.iterrows(), total=len(df_ocupacion), desc="Cargando ocupación en Neo4j"):
         session.write_transaction(create_hotel_occupancy, row)
 
-    for _, row in df_merged.iterrows():
+    for _, row in tqdm(df_merged.iterrows(), total=len(df_merged), desc="Actualizando sostenibilidad en Neo4j"):
         session.write_transaction(update_sustainability, row)
 
     puntos = set(normalizar_nombre(p) for p in df_transporte["origen"]).union(
               set(normalizar_nombre(p) for p in df_transporte["destino"]))
-    for punto in puntos:
+    for punto in tqdm(puntos, desc="Creando puntos en Neo4j"):
         session.execute_write(create_punto_node, punto)
 
-    for _, row in df_transporte.iterrows():
+    for _, row in tqdm(df_transporte.iterrows(), total=len(df_transporte), desc="Creando trayectos en Neo4j"):
         origen = normalizar_nombre(row["origen"])
         destino = normalizar_nombre(row["destino"])
         num_usuarios = row.get("num_usuarios")
-        duracion = row.get("duracion")
+        duracion = row.get("tiempo_viaje_promedio_min")
         tipo_transporte = row.get("tipo_transporte")
         session.execute_write(create_trayecto_relationship, origen, destino, num_usuarios, duracion, tipo_transporte)
 
-    for _, row in df_rutas.iterrows():
+    for _, row in tqdm(df_rutas.iterrows(), total=len(df_rutas), desc="Creando rutas en Neo4j"):
         session.execute_write(create_ruta_node, row)
 
-    for _, row in df_rutas.iterrows():
+    for _, row in tqdm(df_rutas.iterrows(), total=len(df_rutas), desc="Vinculando puntos a rutas en Neo4j"):
         origen = normalizar_nombre(row["origen_ruta"])
         ruta_nombre = row["ruta_nombre"]
         session.execute_write(link_punto_to_ruta, origen, ruta_nombre)
-    '''
-    for _, row in df_opiniones.iterrows():
-        session.write_transaction(create_opinion_node, row)
+    
+    for _, row in tqdm(df_opiniones.iterrows(), total=len(df_opiniones), desc="Cargando opiniones en Neo4j"):
+        session.execute_write(create_opinion_node, row)
 
 driver.close()
 print("Datos de hoteles y ocupación actualizados en Neo4j.")

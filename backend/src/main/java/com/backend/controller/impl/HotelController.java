@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.persistence.Hotel;
-import com.backend.persistence.HotelWithOccupancyDTO;
 import com.backend.service.impl.HotelService;
 
 @RestController
@@ -20,24 +19,63 @@ public class HotelController {
     @Autowired
     private HotelService hotelService;
 
+    /**
+     * * Get all hotels without occupancy
+     * 
+     * @return
+     */
     @GetMapping("/all")
     public ResponseEntity<List<Hotel>> getAllHotels() {
-        
+
         return ResponseEntity.ok(this.hotelService.getAllHotels());
     }
 
+    /**
+     * Get hotel by name without occupancy
+     * 
+     * @param nameHotel
+     * @return
+     */
     @GetMapping("/getHotelByName")
     public ResponseEntity<Hotel> getHotelByName(@RequestParam String nameHotel) {
-        
+
         return ResponseEntity.ok(this.hotelService.getHotelByName(nameHotel));
     }
 
-
+    /**
+     * Get hotel by name with occupancy
+     * 
+     * @param nameHotel
+     * @return
+     */
     @GetMapping("/getHotelInfoWithOccupancyByName")
-    public ResponseEntity<HotelWithOccupancyDTO> getHotelInfoWithOccupancyByName(@RequestParam String nameHotel) {
-        
+    public ResponseEntity<Hotel> getHotelInfoWithOccupancyByName(@RequestParam String nameHotel) {
+
         return ResponseEntity.ok(this.hotelService.getHotelInfoWithOccupancyByName(nameHotel));
     }
 
+    /**
+     * Get hotel by name with comments
+     * 
+     * @param nameHotel
+     * @return
+     */
+    @GetMapping("/getHotelInfoWithComments")
+    public ResponseEntity<Hotel> getHotelInfoWithComments(@RequestParam String nameHotel) {
+
+        return ResponseEntity.ok(this.hotelService.getHotelInfoWithComments(nameHotel));
+    }
+
+    /**
+     * Get hotel by name with occupancy and comments
+     * 
+     * @param nameHotel
+     * @return
+     */
+    @GetMapping("/getHotelInfoWithAllByName")
+    public ResponseEntity<Hotel> getHotelInfoWithOccupancyAndCommentsByName(@RequestParam String nameHotel) {
+
+        return ResponseEntity.ok(this.hotelService.getHotelInfoWithAllByName(nameHotel));
+    }
 
 }

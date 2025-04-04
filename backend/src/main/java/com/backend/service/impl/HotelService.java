@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.backend.exception.CustomException;
 import com.backend.persistence.Hotel;
-import com.backend.persistence.HotelWithOccupancyDTO;
+import com.backend.persistence.HotelOccupancy;
+import com.backend.persistence.Opinion;
 import com.backend.repository.impl.HotelRepository;
 
 @Service
@@ -28,32 +29,60 @@ public class HotelService {
 
     }
 
-
     public List<Hotel> getAllHotels() {
         return this.hotelRepository.findAll();
     }
 
-    public HotelWithOccupancyDTO getHotelInfoWithOccupancyByName(String nameHotel) {
+    public Hotel getHotelInfoWithOccupancyByName(String nameHotel) {
 
-        Optional<Hotel> hotelOptional  = this.hotelRepository.findHotelWithOccupancies(nameHotel);
+        Optional<Hotel> hotelOpt = this.hotelRepository.findByName(nameHotel);
 
-        if (!hotelOptional.isPresent()) {
+        if (!hotelOpt.isPresent()) {
             throw new CustomException("Hotel not found");
         }
-    
-        Hotel hotel = hotelOptional.get();
-    
-        // Crear el DTO y asignar los valores manualmente
-        return new HotelWithOccupancyDTO(
-            hotel.getId(),
-            hotel.getName(),
-            hotel.getAverageRating(),
-            hotel.getNumberOfReviews(),
-            hotel.getDescription(),
-            hotel.getPricePerNight(),
-            hotel.getLocation(),
-            hotel.getOccupancies() // Aquí se incluyen las ocupaciones
-        );
+
+        Hotel hotel = hotelOpt.get();
+
+        List<HotelOccupancy> occupancies = hotelRepository.findOccupanciesByHotelName(nameHotel);
+
+        hotel.setOccupancies(occupancies);
+
+        return hotel;
+    }
+
+    public Hotel getHotelInfoWithComments(String nameHotel) {
+        Optional<Hotel> hotelOpt = this.hotelRepository.findByName(nameHotel);
+
+        if (!hotelOpt.isPresent()) {
+            throw new CustomException("Hotel not found");
+        }
+
+        Hotel hotel = hotelOpt.get();
+
+        List<Opinion> opinions = hotelRepository.findByOpinionsHotelNombre(nameHotel);
+        System.out.println(opinions.toString());
+
+        hotel.setOpinions(opinions);
+        return hotel;
+
+    }
+
+    public Hotel getHotelInfoWithAllByName(String nameHotel) {
+        Optional<Hotel> hotelOpt = this.hotelRepository.findByName(nameHotel);
+
+        if (!hotelOpt.isPresent()) {
+            throw new CustomException("Hotel not found");
+        }
+
+        Hotel hotel = hotelOpt.get();
+
+        List<HotelOccupancy> occupancies = hotelRepository.findOccupanciesByHotelName(nameHotel);
+        List<Opinion> opinions = hotelRepository.findByOpinionsHotelNombre(nameHotel);
+
+        hotel.setOccupancies(occupancies);
+        hotel.setOpinions(opinions);
+
+        return hotel;
     }
 
 }

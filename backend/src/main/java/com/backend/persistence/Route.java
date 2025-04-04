@@ -1,18 +1,22 @@
 package com.backend.persistence;
 
-import java.util.UUID;
-
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
+import lombok.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Node("Ruta")
 public class Route {
     @Id
     @GeneratedValue
-    private UUID id;
+    private Long id;
 
     @Property("ruta_nombre")
     private String routeName;
@@ -29,7 +33,7 @@ public class Route {
     @Property("popularidad")
     private int popularity;
 
-    @Relationship(type = "ORIGEN", direction = Relationship.Direction.OUTGOING)
-    private Location origin;
+    @Relationship(type = "INICIO", direction = Relationship.Direction.INCOMING)
+    private Punto origin;
 
 }

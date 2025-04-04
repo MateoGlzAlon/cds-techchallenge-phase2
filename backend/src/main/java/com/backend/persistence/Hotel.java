@@ -31,6 +31,10 @@ public class Hotel {
     @Transient
     private List<HotelOccupancy> occupancies;
 
+    @Relationship(type = "OPINA_SOBRE", direction = Relationship.Direction.INCOMING)
+    @Transient
+    private List<Opinion> opinions;
+
     @Property("valoracion_media")
     private Double averageRating;
 
