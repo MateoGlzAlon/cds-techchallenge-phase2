@@ -1,6 +1,7 @@
 import OpenAI from "openai"
 import axios from 'axios';
 import dotenv from 'dotenv';
+import { getAllRoutes, getAllHotels, getAllTrayectories } from "@/api/services"
 
 dotenv.config();
 //const API_KEY_OPENROUTER=process.env.API_KEY_OPENROUTER;
@@ -14,6 +15,7 @@ class Agent {
 		this.messages = [{ role: 'system', content: context }];
 		this.context = context;
 	}
+
 	async receiveMessage(message, history = true) {
     	if (history) {
     		this.messages.push({ role: 'user', content: message });
@@ -54,71 +56,129 @@ class Agent {
 }
 
 
+function filterHotels(hotels, filterParams) {
+    return hotels.filter(hotel => {
+        const name = filterParams.nombre || null;
+        const location = filterParams.ubicacion || null;
+        const priceMin = filterParams.precio_min || null;
+        const priceMax = filterParams.precio_max || null;
+        const ratingMin = filterParams.valoracion_min || null;
+        const ratingMax = filterParams.valoracion_max || null;
+        const minReviews = filterParams.numero_resenas || null;
+
+        return (!name || hotel.nombre.includes(name)) &&
+               (!location || hotel.ubicacion.includes(location)) &&
+               (!priceMin || hotel.precio_noche >= priceMin) &&
+               (!priceMax || hotel.precio_noche <= priceMax) &&
+               (!ratingMin || hotel.valoracion_media >= ratingMin) &&
+               (!ratingMax || hotel.valoracion_media <= ratingMax) &&
+               (!minReviews || hotel.numero_resenas >= minReviews);
+    }).sort((a, b) => b.valoracion_media - a.valoracion_media).slice(0, 5);
+}
+
+
+function filterRoutes(routes, filterParams) {
+    const filteredRoutes = routes.filter(route => {
+        const routeName = filterParams.routeName || null;
+        const routeType = filterParams.routeType || null;
+        const distanceKmMin = filterParams.distanceKm_min || null;
+        const distanceKmMax = filterParams.distanceKm_max || null;
+        const durationHoursMin = filterParams.durationHours_min || null;
+        const durationHoursMax = filterParams.durationHours_max || null;
+        const originName = filterParams.origin_name || null;
+
+        return (!routeName || route.routeName.includes(routeName)) &&
+               (!routeType || route.routeType === routeType) &&
+               (!distanceKmMin || route.distanceKm >= distanceKmMin) &&
+               (!distanceKmMax || route.distanceKm <= distanceKmMax) &&
+               (!durationHoursMin || route.durationHours >= durationHoursMin) &&
+               (!durationHoursMax || route.durationHours <= durationHoursMax) &&
+               (!originName || route.origin.name.includes(originName));
+    });
+
+    return filteredRoutes.sort((a, b) => b.popularity - a.popularity).slice(0, 5);
+}
+
+
 
 class Chat{
 	constructor(){
-		this.agent_get_topic = new Agent("Tu tarea es analizar el mensaje del usuario y clasificarlo en una de las siguientes categorías: 'hotel', 'ruta', 'transporte' o 'conversación'. Devuelve solo la categoría más relevante sin agregar explicaciones.");
+		this.agent_get_topic = new Agent("Tu tarea es analizar el mensaje del usuario y clasificarlo en una de las siguientes categorías: 'hotel', 'ruta', 'transporte' o 'conversación'. Devuelve solo la categoría más relevante sin agregar explicaciones. Puedes devolver ninguna o más de una seguida de comas.");
 		this.agent_extract_json = new Agent(`El usuario ha solicitado información sobre una categoria. Extrae los valores relevantes y devuélvelos en formato JSON con las siguientes claves según la categoría:
-Hotel: hotel_nombre, precio_min, precio_max.
-Ruta: nombre, tipo_ruta(Aventura, Cultural, Gastronómica, Histórica, Ecológica), km_min, km_max, hour_min, hour_max, popular_min (numero del 0 al 5), popular_max (numero del 0 al 5).
+Hotel: nombre, ubicacion, precio_min, precio_max, valoracion_min, valoracion_max, numero_resenas.
+Ruta: routeName, routeType(Aventura, Cultural, Gastronómica, Histórica, Ecológica), distanceKm_min, distanceKm_max, durationHours_min, durationHours_max, durationHours_min (numero del 0 al 50), durationHours_max (numero del 0 al 50), origin_name.
 Transporte: tipo(Autobús, Tranvía, Coche Compartido, Taxi, Bicicleta, Metro), tiempo_min, tiempo_max, salida, llegada.
 Si el usuario no proporciona un dato, deja su valor como null. Si para unos valores con max y min el usuario da un valor que no es maximo ni minimo, pon un rango entre esos valores, pero no pongas lo mismo en maximo y en minimo. No agregues explicaciones, solo devuelve el JSON."`);
 		this.agent_generate_chat = new Agent("Eres un asistente de viajes, genera una respuesta amigable y útil basada en los datos de la base de datos. Si no hay información, ofrece una alternativa o pide más detalles.");
+	
+			
+		this.hotels = [];
+		this.routes = [];
+		this.transport = [];
+
+	}
+
+	
+	async init() {
+		try {
+			//this.hotels = await getAllHotels();
+			this.routes = await getAllRoutes();
+			//this.transport = await getAllTrayectories();
+
+			console.log("Datos precargados para el chatbot");
+		} catch (err) {
+			console.error("Error cargando datos iniciales para el chatbot", err);
+		}
+	}
+
+	async getJsonInfo(topic, message){
+		let json_info = await this.agent_extract_json.receiveMessage("topic: '"+topic+"' user message: '"+message+"'");
+		console.log("JSON info: " + json_info);
+		json_info = json_info.match(/```json([\s\S]*?)```/);
+		console.log("JSON info: " + json_info);
+		json_info = json_info[1];
+		console.log("JSON info: ");
+		console.log(json_info);
+		json_info = JSON.parse(json_info);
+		console.log("JSON info: ");
+		console.log(json_info);
+		return json_info;
 	}
 
 	async receiveMessage(message){
+		await this.init();
+
 		let topic = await this.agent_get_topic.receiveMessage(message);
 		let response = "Lo siento, ha ocurrido un error.";
-		console.log(topic);
+		console.log("Topic: " + topic);
 		if (!(topic.includes('hotel') || topic.includes('ruta') || topic.includes('transporte'))){
 			response = await this.agent_generate_chat.receiveMessage(message,true);
 		}else{
-			const json_info = await this.agent_extract_json.receiveMessage("topic: '"+topic+"' user message: '"+message+"'");
 			let db_information = "";
 			if(topic.includes('hotel')){
-				// "Hola, no se que hotel coger, solo puedo gastarme 100€ la noche."
-				//```json
-				//{
-				//"hotel_nombre": null,
-				//"precio_min": null,
-				//"precio_max": 100
-				//}
-				//```
-				db_information += "hotel_azul 50€, hotel_verde 30€, hotel_amarillo 20€, hotel_gris 80€;";
+				let json_info = await this.getJsonInfo('hotel', message);
+				console.log("JSON info: ");
+				console.log(json_info);
+				//db_information += filterHotels(this.hotels, json_info).map(hotel => `${hotel.nombre} ${hotel.descripcion} ${hotel.ubicacion} ${hotel.precio_noche}€ ${hotel.valoracion_media} ${hotel.numero_resenas}`).join(", ");	
 			}
 			if(topic.includes('ruta')){
-				// "Quiero hacer una ruta de mas o menos 7km que no sea muy popular."
-				//```json
-				//{
-				//	"nombre": null,
-				//	"tipo_ruta": null,
-				//	"km_min": 6,
-				//	"km_max": 8,
-				//	"hour_min": null,
-				//	"hour_max": null,
-				//	"popular_min": 0,
-				//	"popular_max": 2
-				//}
-				//```
-				db_information += "ruta los pinos Cultural 6.8km 3h 0.6 popularidad, ruta las cazuelas Gastronomica 7.5km 4.2h 1.5popularidad";
+				console.log(this.routes)
+				let json_info = await this.getJsonInfo('ruta', message);
+				console.log("JSON info: ");
+				console.log(json_info);
+				db_information += filterRoutes(this.routes, json_info).map(route => `${route.routeName} ${route.routeType} ${route.distanceKm}km ${route.durationHours}h ${route.popularity}`).join(", ");
 			}
 			if(topic.includes('transporte')){
-				// "Me puedes decir a dónde puedo ir en Tranvía desde Alletra City"
-				//```json
-				//{
-				//	"tipo": "Tranvía",
-				//	"tiempo_min": null,
-				//	"tiempo_max": null,
-				//	"salida": "Alletra City",
-				//	"llegada": null
-				//}
-				//```
-				db_information += "Tranvía de Alletra City a Plaza Molinos entre 5 y 6 minutos; Tranvía de Alletra City a la fuente giratoria de 10 a 12 minutos; Tranvía de Alletra City a Torre Eifell de 20 a 27 minutos";
+				let json_info = await this.getJsonInfo('transporte', message);
+				console.log("JSON info: ");
+				console.log(json_info);
+				db_information += "";
   
 			}
-			response=this.agent_generate_chat.receiveMessage("Responde a este mensaje: '"+message+"' sabiendo:'"+db_information+"'");
-
-			console.log(json_info);
+			console.log("DB information: " + db_information);	
+			response = await this.agent_generate_chat.receiveMessage("Responde a este mensaje: '"+message+"' sabiendo:'"+db_information+"'");
+			response = response.replace(/\*/g, '').trim();
+			console.log("Response: " + response);
 		}
 		return response
 	}
