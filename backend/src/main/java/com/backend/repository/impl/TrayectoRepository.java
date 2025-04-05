@@ -11,10 +11,8 @@ import com.backend.persistence.Trayecto;
 
 @Repository
 public interface TrayectoRepository extends Neo4jRepository<Trayecto, Long> {
-    @Query("MATCH (p1:Punto)-[t:TRAYECTO]-(p2:Punto) " +
-            "WHERE toLower(p1.nombre) = toLower($origen) " +
-            "AND toLower(p2.nombre) = toLower($destino) " +
-            "RETURN t ORDER BY t.duracion ASC")
+    @Query("MATCH path = (p1:Punto {nombre: $origin})-[t:TRAYECTO*1..5]->(p2:Punto {nombre: $destination}) RETURN t")
+
     List<Trayecto> findTrayectosBetweenCities(@Param("origen") String origen, @Param("destino") String destino);
 
 }

@@ -21,7 +21,7 @@ public class RoutesService {
     private LocationRepository locationRepository;
 
     public List<Route> getAllRoutes() {
-        return routeRepository.findAllWithStartPoint();
+        return routeRepository.findAll();
     }
 
     public Route createRoute(Route route) {
