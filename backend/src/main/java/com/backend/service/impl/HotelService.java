@@ -29,6 +29,17 @@ public class HotelService {
 
     }
 
+    public Hotel getHotelById(Long hotelId) {
+
+        Optional<Hotel> hotel = this.hotelRepository.findById(hotelId);
+
+        if (!hotel.isPresent()) {
+            throw new CustomException("Hotel not found");
+        }
+        return hotel.get();
+
+    }
+
     public List<Hotel> getAllHotels() {
         return this.hotelRepository.findAll();
     }

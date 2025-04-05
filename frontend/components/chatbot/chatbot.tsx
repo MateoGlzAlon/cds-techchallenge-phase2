@@ -103,9 +103,8 @@ function Chatbot() {
             {messages.map((message) => (
               <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
-                    message.role === "user" ? "bg-green-100 text-green-600" : "bg-gray-100 text-gray-800"
-                  }`}
+                  className={`max-w-[80%] rounded-lg p-3 ${message.role === "user" ? "bg-green-100 text-green-600" : "bg-gray-100 text-gray-800"
+                    }`}
                 >
                   {message.content}
                 </div>

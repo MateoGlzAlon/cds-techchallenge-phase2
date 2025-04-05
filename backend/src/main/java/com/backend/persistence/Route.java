@@ -1,5 +1,7 @@
 package com.backend.persistence;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
@@ -36,60 +38,7 @@ public class Route {
     private int popularity;
 
     @Relationship(type = "INICIO", direction = Relationship.Direction.INCOMING)
+    @JsonManagedReference("punto-origin")
     private Punto origin;
-    
-    public Punto getOrigin() {
-        return origin;
-    }
-    
-    public void setOrigin(Punto origin) {
-        this.origin = origin;
-    }
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getRouteName() {
-        return routeName;
-    }
-
-    public void setRouteName(String routeName) {
-        this.routeName = routeName;
-    }
-
-    public String getRouteType() {
-        return routeType;
-    }
-
-    public void setRouteType(String routeType) {
-        this.routeType = routeType;
-    }
-
-    public double getDistanceKm() {
-        return distanceKm;
-    }
-
-    public void setDistanceKm(double distanceKm) {
-        this.distanceKm = distanceKm;
-    }
-
-    public int getDurationHours() {
-        return durationHours;
-    }
-
-    public void setDurationHours(int durationHours) {
-        this.durationHours = durationHours;
-    }
-
-    public int getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(int popularity) {
-        this.popularity = popularity;
-    }
 }

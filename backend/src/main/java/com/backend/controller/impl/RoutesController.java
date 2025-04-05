@@ -2,13 +2,10 @@ package com.backend.controller.impl;
 
 import java.util.List;
 
+import com.backend.persistence.Hotel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.backend.persistence.Route;
 import com.backend.service.impl.RoutesService;
@@ -28,6 +25,17 @@ public class RoutesController {
     @PostMapping("/addRoute")
     public ResponseEntity<Route> createRoute(@RequestBody Route route) {
         return ResponseEntity.ok(routesService.createRoute(route));
+    }
+
+    /**
+     * Get hotel by id
+     *
+     * @param
+     * @return
+     */
+    @GetMapping("/{routeId}")
+    public ResponseEntity<Route> getHotelById(@PathVariable Long routeId) {
+        return ResponseEntity.ok(this.routesService.getRouteById(routeId));
     }
 
     /**

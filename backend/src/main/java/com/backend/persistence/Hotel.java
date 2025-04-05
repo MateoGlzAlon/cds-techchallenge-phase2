@@ -2,6 +2,7 @@ package com.backend.persistence;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
@@ -28,11 +29,10 @@ public class Hotel {
     private String name;
 
     @Relationship(type = "TIENE_OCUPACION", direction = Relationship.Direction.OUTGOING)
-    @Transient
+    @JsonManagedReference("hotel-ocuppancies")
     private List<HotelOccupancy> occupancies;
 
     @Relationship(type = "OPINA_SOBRE", direction = Relationship.Direction.INCOMING)
-    @Transient
     private List<Opinion> opinions;
 
     @Property("valoracion_media")
@@ -50,82 +50,4 @@ public class Hotel {
     @Property("ubicacion")
     private String location;
 
-    // public Hotel() {}
-
-    public Hotel(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<HotelOccupancy> getOccupancies() {
-        return occupancies;
-    }
-
-    public void setOccupancies(List<HotelOccupancy> occupancies) {
-        this.occupancies = occupancies;
-    }
-
-    public List<Opinion> getOpinions() {
-        return opinions;
-    }
-
-    public void setOpinions(List<Opinion> opinions) {
-        this.opinions = opinions;
-    }
-
-    public Double getAverageRating() {
-        return averageRating;
-    }
-
-    public void setAverageRating(Double averageRating) {
-        this.averageRating = averageRating;
-    }
-
-    public Integer getNumberOfReviews() {
-        return numberOfReviews;
-    }
-
-    public void setNumberOfReviews(Integer numberOfReviews) {
-        this.numberOfReviews = numberOfReviews;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Double getPricePerNight() {
-        return pricePerNight;
-    }
-
-    public void setPricePerNight(Double pricePerNight) {
-        this.pricePerNight = pricePerNight;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
 }

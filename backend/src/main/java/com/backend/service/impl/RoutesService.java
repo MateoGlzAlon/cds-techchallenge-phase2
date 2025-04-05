@@ -3,6 +3,8 @@ package com.backend.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import com.backend.exception.CustomException;
+import com.backend.persistence.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,4 +46,14 @@ public class RoutesService {
         return routeRepository.save(route);
     }
 
+    public Route getRouteById(Long routeId) {
+
+        Optional<Route> route = this.routeRepository.findById(routeId);
+
+        if (!route.isPresent()) {
+            throw new CustomException("Route not found");
+        }
+        return route.get();
+
+    }
 }

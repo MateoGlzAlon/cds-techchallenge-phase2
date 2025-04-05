@@ -7,36 +7,37 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Hotel, MapPin, Star, Wifi, Coffee, Utensils, Search, Dumbbell, PocketIcon as Pool } from "lucide-react"
 import { DATA } from '@/app/data'
-import { useState } from 'react'
+import { useState, useEffect } from "react"
+import { getAllHotels } from "@/api/services"
 
 export default function Hotels() {
 
   const [priceFilter, setPriceFilter] = useState("0-20");
   const [ratingFilter, setRatingFilter] = useState("⭐");
+  const [hotels, setHotels] = useState([]);
 
   const handleFilterChange = (setter, value) => {
     setter(value);
   };
 
+  useEffect(() => {
+    const fetchHotels = async () => {
 
-  // Function to render amenity icon
-  const getAmenityIcon = (amenity) => {
-    switch (amenity) {
-      case "Free WiFi":
-        return <Wifi className="h-4 w-4" />
-      case "Pool":
-        return <Pool className="h-4 w-4" />
-      case "Restaurant":
-        return <Utensils className="h-4 w-4" />
-      case "Breakfast":
-        return <Coffee className="h-4 w-4" />
-      case "Gym":
-      case "Fitness Center":
-        return <Dumbbell className="h-4 w-4" />
-      default:
-        return <Hotel className="h-4 w-4" />
+      try {
+        const hotelsData = await getAllHotels()
+        setHotels(hotelsData)
+        console.log(hotelsData)
+        console.log("hotels", hotels)
+
+      } catch (err) {
+        console.error("Error fetching hotel:", err)
+      }
+
     }
-  }
+
+    fetchHotels()
+  }, [])
+
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
@@ -96,7 +97,7 @@ export default function Hotels() {
       </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {DATA.mockHotels.map((hotel) => (
+        {hotels.map((hotel) => (
           <Card key={hotel.id} className="overflow-hidden hover:shadow-lg transition-shadow">
             <img src={hotel.image || "/placeholder.svg"} alt={hotel.name} className="w-full h-48 object-cover" />
             <CardContent className="p-6">
@@ -115,29 +116,12 @@ export default function Hotels() {
 
               <p className="mt-2 text-gray-600 text-sm line-clamp-2">{hotel.description}</p>
 
-              <div className="mt-4 flex flex-wrap gap-2">
-                {hotel.tags.map((tag, index) => (
-                  <Badge key={index} variant="outline" className="px-1 py-1 bg-gray-50 text-gray-700 border-gray-200">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-
-              <div className="mt-4 flex flex-wrap gap-3">
-                {hotel.amenities.slice(0, 5).map((amenity, index) => (
-                  <div key={index} className="flex items-center text-xs text-gray-500">
-                    {getAmenityIcon(amenity)}
-                    <span className="ml-1">{amenity}</span>
-                  </div>
-                ))}
-              </div>
-
               <div className="mt-4 flex justify-between items-center">
                 <div className="text-lg font-bold text-green-600">
-                  {hotel.price}
+                  {hotel.pricePerNight?.toFixed(2)} €
                   <span className="text-sm font-normal text-gray-500">/night</span>
                 </div>
-                <div className="text-sm text-gray-500">{hotel.reviews} reviews</div>
+                <div className="text-sm text-gray-500">{hotel.numberOfReviews} reviews</div>
               </div>
             </CardContent>
             <CardFooter className="bg-gray-50 px-6 py-4">

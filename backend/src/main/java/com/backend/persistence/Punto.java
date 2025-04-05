@@ -1,5 +1,7 @@
 package com.backend.persistence;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
@@ -24,13 +26,6 @@ public class Punto {
     private String name;
 
     @Relationship(type = "INICIO", direction = Relationship.Direction.OUTGOING)
+    @JsonBackReference("punto-origin")
     private Route ruta;
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String nombre) {
-        this.name = nombre;
-    }
 }

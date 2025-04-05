@@ -4,10 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.backend.persistence.Hotel;
 import com.backend.service.impl.HotelService;
@@ -40,6 +37,17 @@ public class HotelController {
     public ResponseEntity<Hotel> getHotelByName(@RequestParam String nameHotel) {
 
         return ResponseEntity.ok(this.hotelService.getHotelByName(nameHotel));
+    }
+
+    /**
+     * Get hotel by id
+     *
+     * @param hotelId
+     * @return
+     */
+    @GetMapping("/{hotelId}")
+    public ResponseEntity<Hotel> getHotelById(@PathVariable Long hotelId) {
+        return ResponseEntity.ok(this.hotelService.getHotelById(hotelId));
     }
 
     /**

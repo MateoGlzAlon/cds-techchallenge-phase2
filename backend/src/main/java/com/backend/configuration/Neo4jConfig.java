@@ -18,7 +18,8 @@ public class Neo4jConfig {
      */
     @Bean
     public Driver neo4jDriver() {
-        return GraphDatabase.driver("bolt://neo4j:7687", AuthTokens.basic("neo4j", "12345678"));
+        //TODO
+        return GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "12345678"));
     }
 
 }

@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Map, Clock, Users, Star, Heart, Share2, MessageSquare, MapPin, Calendar, Info, Calculator } from "lucide-react"
 import { DATA } from '@/app/data'
+import { getHotelById } from "@/api/services"
 
 export default function hotelDetails() {
   const params = useParams() // Using Next.js useParams hook
@@ -15,18 +16,34 @@ export default function hotelDetails() {
   const [hotel, setHotel] = useState();
 
   useEffect(() => {
-    setHotel(DATA.mockHotelDetailPage)
-    if (params?.id) {
-      setHotelId(params.id) // Ensure we extract the id after params is available
+    const fetchHotel = async () => {
+      if (params?.id) {
+        setHotelId(params.id)
+
+        try {
+          const hotelData = await getHotelById(params.id)
+          setHotel(hotelData)
+          console.log(hotelData)
+          console.log("hotel", hotelData)
+
+        } catch (err) {
+          console.error("Error fetching hotel:", err)
+        }
+      }
+
     }
+
+    fetchHotel()
+    console.log("hotel", hotel)
   }, [params])
 
   const [isJoined, setIsJoined] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
 
-  if (!hotelId) {
+  if (!hotel) {
     return <div>Loading...</div>
   }
+
 
 
   return (
@@ -41,21 +58,24 @@ export default function hotelDetails() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
           <div className="rounded-lg overflow-hidden mb-6">
-            <img src={hotel.image || "/placeholder.svg"} alt={hotel.title} className="w-full h-[400px] object-cover" />
+
+
+            <img src={hotel.image || "/placeholder.svg"} alt={hotel.name} className="w-full h-[400px] object-cover" />
+
           </div>
 
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">{hotel.title}</h1>
+              <h1 className="text-3xl font-bold text-gray-900">{hotel.name}</h1>
               <div className="flex items-center mt-2">
                 <div className="flex items-center">
                   <Star className="h-5 w-5 text-yellow-500 mr-1" />
-                  <span className="font-medium">{hotel.rating}</span>
+                  <span className="font-medium">{hotel.averageRating?.toFixed(1)}</span>
                 </div>
                 <span className="mx-2 text-gray-300">•</span>
                 <div className="flex items-center">
                   <Users className="h-5 w-5 text-gray-400 mr-1" />
-                  <span>{hotel.participants} participants</span>
+                  <span>{hotel.numberOfReviews} reviews</span>
                 </div>
               </div>
             </div>

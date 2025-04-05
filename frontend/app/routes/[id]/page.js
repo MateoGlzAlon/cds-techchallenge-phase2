@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Map, Clock, Users, Star, Heart, Share2, MessageSquare, MapPin, Calendar, Info, Calculator } from "lucide-react"
 import { DATA } from '@/app/data'
+import { getRouteById } from "@/api/services"
 
 export default function RouteDetails() {
   const params = useParams() // Using Next.js useParams hook
@@ -16,16 +17,32 @@ export default function RouteDetails() {
   const [route, setRoute] = useState();
 
   useEffect(() => {
-    setRoute(DATA.mockRouteDetails)
-    if (params?.id) {
-      setRouteId(params.id) // Ensure we extract the id after params is available
+    const fetchRoute = async () => {
+      if (params?.id) {
+        setRouteId(params.id)
+
+        try {
+          const routeData = await getRouteById(params.id)
+          setRoute(routeData)
+          console.log(routeData)
+          console.log("route", routeData)
+
+        } catch (err) {
+          console.error("Error fetching route:", err)
+        }
+      }
+
     }
+
+    fetchRoute()
+    console.log("route", route)
   }, [params])
+
 
   const [isJoined, setIsJoined] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
 
-  if (!routeId) {
+  if (!route) {
     return <div>Loading...</div>
   }
 
@@ -42,21 +59,20 @@ export default function RouteDetails() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
           <div className="rounded-lg overflow-hidden mb-6">
-            <img src={route.image || "/placeholder.svg"} alt={route.title} className="w-full h-[400px] object-cover" />
+            <img src={route.image || "/placeholder.svg"} alt={route.routeName} className="w-full h-[400px] object-cover" />
           </div>
 
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">{route.title}</h1>
+              <h1 className="text-3xl font-bold text-gray-900">{route.routeName}</h1>
               <div className="flex items-center mt-2">
                 <div className="flex items-center">
                   <Star className="h-5 w-5 text-yellow-500 mr-1" />
-                  <span className="font-medium">{route.rating}</span>
+                  <span className="font-medium">{(route.popularity / 10)?.toFixed(1)}</span>
                 </div>
                 <span className="mx-2 text-gray-300">•</span>
                 <div className="flex items-center">
-                  <Users className="h-5 w-5 text-gray-400 mr-1" />
-                  <span>{route.participants} participants</span>
+                  <span>Origin: {route.origin.name} </span>
                 </div>
               </div>
             </div>
@@ -66,8 +82,7 @@ export default function RouteDetails() {
           <h2 className="text-2xl mb-8">Overview</h2>
 
           <div className="prose max-w-none">
-            <p className="text-gray-700">{route.description}</p>
-            <p className="text-gray-700 whitespace-pre-line">{route.longDescription}</p>
+            <p className="text-gray-700">{route.distanceKm} km, {route.durationHours} h</p>
           </div>
 
         </div>
