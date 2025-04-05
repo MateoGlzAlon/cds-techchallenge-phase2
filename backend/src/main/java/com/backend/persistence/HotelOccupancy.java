@@ -23,7 +23,7 @@ public class HotelOccupancy {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private Long id;
 
     @Property("fecha")
     private String date;

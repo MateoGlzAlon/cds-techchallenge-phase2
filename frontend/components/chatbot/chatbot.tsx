@@ -1,76 +1,81 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useRef, useEffect } from "react"
-import { XMarkIcon, PaperAirplaneIcon, ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/solid"
-import Chat from "@/lib/chatService.mjs"
+import { useState, useRef, useEffect } from "react";
+import {
+  XMarkIcon,
+  PaperAirplaneIcon,
+  ChatBubbleBottomCenterTextIcon,
+} from "@heroicons/react/24/solid";
+import Chat from "@/lib/chatService.mjs";
 
 type Message = {
-  id: string
-  content: string
-  role: "user" | "assistant"
-}
+  id: string;
+  content: string;
+  role: "user" | "assistant";
+};
 
 function Chatbot() {
-  const chat = new Chat()
+  const chat = new Chat();
 
-
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      content: "Hola, soy tu asistente virtual de GreenLake. ¿En qué puedo ayudarte hoy?",
+      content:
+        "Hola, soy tu asistente virtual de GreenLake. ¿En qué puedo ayudarte hoy?",
       role: "assistant",
     },
-  ])
-  const [input, setInput] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  ]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
-    scrollToBottom()
-  }, [messages])
+    scrollToBottom();
+  }, [messages]);
 
   const handleSubmit = async (e?: React.FormEvent) => {
-    if (e) e.preventDefault()
-    if (!input.trim()) return
+    if (e) e.preventDefault();
+    if (!input.trim()) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
       content: input,
       role: "user",
-    }
-    setMessages((prev) => [...prev, userMessage])
-    setInput("")
-    setIsLoading(true)
+    };
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+    setIsLoading(true);
 
     try {
-
       const res = await chat.receiveMessage(input);
-      console.log(res)
+      console.log(res);
+
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: res || "Lo siento, ha ocurrido un error al procesar tu solicitud.",
+        content:
+          res || "Lo siento, ha ocurrido un error al procesar tu solicitud.",
         role: "assistant",
-      }
-      setMessages((prev) => [...prev, assistantMessage])
+      };
+      setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
-      console.error("Error sending message:", error)
+      console.error("Error sending message:", error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         content: "Lo siento, ha ocurrido un error al enviar tu mensaje.",
         role: "assistant",
-      }
-      setMessages((prev) => [...prev, errorMessage])
+      };
+      setMessages((prev) => [...prev, errorMessage]);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="fixed bottom-4 right-4">
@@ -80,7 +85,11 @@ function Chatbot() {
         className="bg-green-100 text-green-600 p-3 rounded-full shadow-lg hover:bg-green-600 hover:text-green-100 focus:outline-none transition-colors duration-200"
         aria-label={isOpen ? "Close chat" : "Open chat"}
       >
-        {isOpen ? <XMarkIcon className="h-6 w-6" /> : <ChatBubbleBottomCenterTextIcon className="h-6 w-6" />}
+        {isOpen ? (
+          <XMarkIcon className="h-6 w-6" />
+        ) : (
+          <ChatBubbleBottomCenterTextIcon className="h-6 w-6" />
+        )}
       </button>
 
       {/* Chat Window */}
@@ -101,10 +110,18 @@ function Chatbot() {
           {/* Chat Messages */}
           <div className="p-3 overflow-y-auto flex-1 space-y-4">
             {messages.map((message) => (
-              <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div
+                key={message.id}
+                className={`flex ${
+                  message.role === "user" ? "justify-end" : "justify-start"
+                }`}
+              >
                 <div
-                  className={`max-w-[80%] rounded-lg p-3 ${message.role === "user" ? "bg-green-100 text-green-600" : "bg-gray-100 text-gray-800"
-                    }`}
+                  className={`max-w-[80%] rounded-lg p-3 ${
+                    message.role === "user"
+                      ? "bg-green-100 text-green-600"
+                      : "bg-gray-100 text-gray-800"
+                  }`}
                 >
                   {message.content}
                 </div>
@@ -157,7 +174,7 @@ function Chatbot() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
 export default Chatbot;

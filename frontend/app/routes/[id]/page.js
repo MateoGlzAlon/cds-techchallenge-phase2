@@ -59,7 +59,7 @@ export default function RouteDetails() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
           <div className="rounded-lg overflow-hidden mb-6">
-            <img src={route.image || "/placeholder.svg"} alt={route.routeName} className="w-full h-[400px] object-cover" />
+            <img src={route.image || `/routes/ruta${route.id}.jpg`} alt={route.routeName} className="w-full h-[400px] object-cover" />
           </div>
 
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
@@ -80,6 +80,10 @@ export default function RouteDetails() {
 
 
           <h2 className="text-2xl mb-8">Overview</h2>
+
+          <div className="prose max-w-none mb-6">
+            {route.description}
+          </div>
 
           <div className="prose max-w-none">
             <p className="text-gray-700">{route.distanceKm} km, {route.durationHours} h</p>

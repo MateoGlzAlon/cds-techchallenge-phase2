@@ -11,7 +11,7 @@ import com.backend.persistence.Trayecto;
 import com.backend.repository.impl.TrayectoRepository;
 
 @Service
-public class DistanceCalculatorService {
+public class DistanceService {
 
     @Autowired
     private TrayectoRepository trayectoRepository;

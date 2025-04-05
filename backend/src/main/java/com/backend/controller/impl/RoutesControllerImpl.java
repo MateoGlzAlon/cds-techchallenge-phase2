@@ -2,30 +2,25 @@ package com.backend.controller.impl;
 
 import java.util.List;
 
-import com.backend.persistence.Hotel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.backend.controller.IRoutesController;
 import com.backend.persistence.Route;
 import com.backend.service.impl.RoutesService;
 
 @RestController
 @RequestMapping("api/v1/routes")
-public class RoutesController {
+public class RoutesControllerImpl implements IRoutesController {
 
     @Autowired
     private RoutesService routesService;
-
-    /**
-     * * Create a new route 
-     * @param route
-     * @return
-     */
-    @PostMapping("/addRoute")
-    public ResponseEntity<Route> createRoute(@RequestBody Route route) {
-        return ResponseEntity.ok(routesService.createRoute(route));
-    }
 
     /**
      * Get hotel by id
@@ -33,6 +28,7 @@ public class RoutesController {
      * @param
      * @return
      */
+    @Override
     @GetMapping("/{routeId}")
     public ResponseEntity<Route> getHotelById(@PathVariable Long routeId) {
         return ResponseEntity.ok(this.routesService.getRouteById(routeId));
@@ -40,11 +36,10 @@ public class RoutesController {
 
     /**
      * Get all routes
-     * TODO: Falta que pille el punto de inicio
-     * que me devuelve null
      * 
      * @return
      */
+    @Override
     @GetMapping("/all")
     public ResponseEntity<List<Route>> getAllRoutes() {
         return ResponseEntity.ok(routesService.getAllRoutes());

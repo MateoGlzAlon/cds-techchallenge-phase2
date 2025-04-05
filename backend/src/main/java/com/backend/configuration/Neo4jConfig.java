@@ -21,5 +21,4 @@ public class Neo4jConfig {
         //TODO
         return GraphDatabase.driver("bolt://localhost:7687", AuthTokens.basic("neo4j", "12345678"));
     }
-
 }

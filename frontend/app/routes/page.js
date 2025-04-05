@@ -51,7 +51,7 @@ export default function Routes() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {routes.map((route) => (
           <Card key={route.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-            <img src={route.image || "/placeholder.svg"} alt={route.routeName} className="w-full h-48 object-cover" />
+            <img src={route.image || `/routes/ruta${route.id}.jpg`} alt={route.routeName} className="w-full h-48 object-cover" />
             <CardContent className="p-6">
               <div className="flex justify-between items-start">
                 <h3 className="text-xl font-bold text-gray-900">{route.routeName}</h3>

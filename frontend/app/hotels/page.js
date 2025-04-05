@@ -99,7 +99,8 @@ export default function Hotels() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {hotels.map((hotel) => (
           <Card key={hotel.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-            <img src={hotel.image || "/placeholder.svg"} alt={hotel.name} className="w-full h-48 object-cover" />
+            
+            <img src={hotel.image || `/hotels/Hotel${hotel.id}.png`} alt={hotel.name} className="w-full h-48 object-cover" />
             <CardContent className="p-6">
               <div className="flex justify-between items-start">
                 <h3 className="text-xl font-bold text-gray-900">{hotel.name}</h3>

@@ -37,6 +37,9 @@ public class Route {
     @Property("popularidad")
     private int popularity;
 
+    @Property("descripcion")
+    private String description;
+
     @Relationship(type = "INICIO", direction = Relationship.Direction.INCOMING)
     @JsonManagedReference("punto-origin")
     private Punto origin;
