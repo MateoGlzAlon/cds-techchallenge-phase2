@@ -35,15 +35,19 @@ services:
     networks:
       - mynetwork
   backend:
-      build:
-        context: ./backend
-        dockerfile: Dockerfile
-      ports:
-       - "5000:5000"
-      depends_on:
-        - neo4j
-      networks:
-        - mynetwork
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "5000:5000"
+    depends_on:
+      - neo4j
+    networks:
+      - mynetwork
+
+
 
 volumes:
   datos:
