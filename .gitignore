@@ -41,9 +41,7 @@ backend/HELP.md
 backend/logs/
 backend/*.log
 backend/.idea/
-backend/.gradle/
-backend/gradle/
-backend/gradlew.bat
+
 
 # --- IDE / Editor Specific ---
 .vscode/
