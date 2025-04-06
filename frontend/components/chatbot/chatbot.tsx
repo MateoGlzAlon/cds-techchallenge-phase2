@@ -43,6 +43,7 @@ function Chatbot() {
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!input.trim()) return;
+    setIsLoading(true);
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -51,7 +52,6 @@ function Chatbot() {
     };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
-    setIsLoading(true);
 
     try {
       const res = await chat.receiveMessage(input);
@@ -130,21 +130,20 @@ function Chatbot() {
             <div ref={messagesEndRef} />
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-gray-100 text-gray-800 rounded-lg p-3 max-w-[80%]">
-                  <div className="flex space-x-2">
-                    <div
-                      className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"
-                      style={{ animationDelay: "0ms" }}
-                    ></div>
-                    <div
-                      className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"
-                      style={{ animationDelay: "150ms" }}
-                    ></div>
-                    <div
-                      className="w-2 h-2 rounded-full bg-gray-400 animate-bounce"
-                      style={{ animationDelay: "300ms" }}
-                    ></div>
-                  </div>
+                <div className="bg-green-50 text-green-800 rounded-lg p-3 max-w-[80%] flex items-center space-x-2 shadow-md animate-pulse">
+                  <span>Pensando...</span>
+                  <div
+                    className="w-2 h-2 rounded-full bg-green-400 animate-bounce"
+                    style={{ animationDelay: "0ms" }}
+                  ></div>
+                  <div
+                    className="w-2 h-2 rounded-full bg-green-400 animate-bounce"
+                    style={{ animationDelay: "150ms" }}
+                  ></div>
+                  <div
+                    className="w-2 h-2 rounded-full bg-green-400 animate-bounce"
+                    style={{ animationDelay: "300ms" }}
+                  ></div>
                 </div>
               </div>
             )}

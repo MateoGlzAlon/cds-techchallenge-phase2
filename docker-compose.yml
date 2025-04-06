@@ -22,7 +22,7 @@ services:
       - neo4j
     networks:
       - mynetwork
-    command: [ "/bin/sh", "-c", "sleep 20 && python distanceCalculator.py" ]
+    command: [ "/bin/sh", "-c", "sleep 20 && python import.py && python distanceCalculator.py" ]
 
   frontend:
     build:

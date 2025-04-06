@@ -31,33 +31,33 @@ export default function Navbar() {
                 className="text-gray-600 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium flex items-center"
               >
                 <Map className="h-4 w-4 mr-1" />
-                Routes
+                Rutas
               </Link>
               <Link
                 href="/hotels"
                 className="text-gray-600 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium flex items-center"
               >
                 <Hotel className="h-4 w-4 mr-1" />
-                Hotels
+                Hoteles
               </Link>
               <Link
                 href="/community"
                 className="text-gray-600 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium flex items-center"
               >
                 <Users className="h-4 w-4 mr-1" />
-                Community
+                Comunidad
               </Link>
             </div>
           </div>
           <div className="hidden md:flex items-center">
             <Link href="/login">
               <Button variant="outline" className="mr-2 w-20 py-3">
-                Login
+                Iniciar Sesión
               </Button>
             </Link>
             <Link href="/register">
               <Button variant="" className="mr-2 w-20 py-3">
-                Sign Up
+                Registrarse
               </Button>
             </Link>
           </div>
@@ -87,32 +87,32 @@ export default function Navbar() {
               href="/routes"
               className="text-gray-600 hover:text-green-600 block px-3 py-2 rounded-md text-base font-medium"
             >
-              Routes
+              Rutas
             </Link>
             <Link
               href="/hotels"
               className="text-gray-600 hover:text-green-600 block px-3 py-2 rounded-md text-base font-medium"
             >
-              Hotels
+              Hoteles
             </Link>
             <Link
               href="/community"
               className="text-gray-600 hover:text-green-600 block px-3 py-2 rounded-md text-base font-medium"
             >
-              Community
+              Comunidad
             </Link>
             <div className="pt-4 pb-3 border-t border-gray-200">
               <Link
                 href="/login"
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-green-600"
               >
-                Login
+                Iniciar Sesión
               </Link>
               <Link
                 href="/register"
                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-green-600"
               >
-                Sign Up
+                Registrarse
               </Link>
             </div>
           </div>

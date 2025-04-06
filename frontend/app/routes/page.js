@@ -35,16 +35,8 @@ export default function Routes() {
     <div className="max-w-7xl mx-auto px-4 py-12">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Explore Routes</h1>
-          <p className="mt-2 text-lg text-gray-600">Discover amazing travel routes shared by our community</p>
-        </div>
-        <div className="mt-4 md:mt-0">
-          <Link href="/routes/create">
-            <Button className="flex items-center">
-              <Map className="mr-2 h-4 w-4" />
-              Create New Route
-            </Button>
-          </Link>
+          <h1 className="text-3xl font-bold text-gray-900">Explorar Rutas</h1>
+          <p className="mt-2 text-lg text-gray-600">Descubre rutas de viaje increíbles compartidas por nuestra comunidad</p>
         </div>
       </div>
 
@@ -77,14 +69,14 @@ export default function Routes() {
                   {route.origin.name}
                 </div>
                 <div className="text-sm text-gray-500">
-                  Type: <span className="font-medium">{route.routeType}</span>
+                  Tipo: <span className="font-medium">{route.routeType}</span>
                 </div>
               </div>
             </CardContent>
             <CardFooter className="bg-gray-50 px-6 py-4">
               <Link href={`/routes/${route.id}`} className="w-full">
                 <Button variant="outline" className="w-full py-2">
-                  View Details
+                  Ver Detalles
                 </Button>
               </Link>
             </CardFooter>
@@ -94,4 +86,3 @@ export default function Routes() {
     </div>
   )
 }
-
