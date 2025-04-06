@@ -28,7 +28,7 @@ export default function Footer() {
                   href="/distance-calculator"
                   className="text-base text-gray-500 hover:text-gray-900"
                 >
-                  Distance Calculator
+                  Transporte
                 </Link>
               </li>
               <li>

@@ -14,11 +14,12 @@ public class Neo4jConfig {
 
     /**
      * neo4jDriver creates and returns a Neo4j driver instance.
+     * 
      * @return A Neo4j driver instance.
      */
     @Bean
     public Driver neo4jDriver() {
-        //TODO
+        // TODO
         return GraphDatabase.driver("bolt://neo4j:7687", AuthTokens.basic("neo4j", "12345678"));
     }
 }

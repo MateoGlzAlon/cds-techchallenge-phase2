@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Map, Hotel, Users, Calculator } from "lucide-react"
+import { Menu, X, Map, Hotel, Users, Calculator, Car } from "lucide-react"
 import { DATA } from "@/app/data"
 
 export default function Navbar() {
@@ -20,13 +20,6 @@ export default function Navbar() {
             </Link>
             <div className="hidden md:ml-6 md:flex md:space-x-4">
               <Link
-                href="/distance-calculator"
-                className="text-gray-600 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium flex items-center"
-              >
-                <Calculator className="h-4 w-4 mr-1" />
-                Distance Calculator
-              </Link>
-              <Link
                 href="/routes"
                 className="text-gray-600 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium flex items-center"
               >
@@ -41,6 +34,13 @@ export default function Navbar() {
                 Hoteles
               </Link>
               <Link
+                href="/distance-calculator"
+                className="text-gray-600 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium flex items-center"
+              >
+                <Car className="h-4 w-4 mr-1" />
+                Transporte
+              </Link>
+              <Link
                 href="/community"
                 className="text-gray-600 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium flex items-center"
               >
@@ -51,12 +51,12 @@ export default function Navbar() {
           </div>
           <div className="hidden md:flex items-center">
             <Link href="/login">
-              <Button variant="outline" className="mr-2 w-20 py-3">
+              <Button variant="outline" className="mr-2 px-5 py-3">
                 Iniciar Sesión
               </Button>
             </Link>
             <Link href="/register">
-              <Button variant="" className="mr-2 w-20 py-3">
+              <Button variant="" className="mr-2 px-5 py-3">
                 Registrarse
               </Button>
             </Link>
@@ -81,7 +81,7 @@ export default function Navbar() {
               href="/distance-calculator"
               className="text-gray-600 hover:text-green-600 block px-3 py-2 rounded-md text-base font-medium"
             >
-              Distance Calculator
+              Transporte
             </Link>
             <Link
               href="/routes"

@@ -27,9 +27,7 @@ public class DistanceService {
 
     public Option getAllTrayectories(String origin, String destination) {
         Option opciones = locationRepository.findByNombreWithOptions(origin, destination);
-        System.out.println("Opciones: " + opciones.toString());
         return opciones;
-
     }
 
 }

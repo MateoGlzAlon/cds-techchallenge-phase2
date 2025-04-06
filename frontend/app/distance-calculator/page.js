@@ -15,6 +15,18 @@ export default function DistanceCalculator() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
 
+  const formatDuration = (minutes) => {
+    if (!minutes || isNaN(minutes)) return "-";
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+
+    if (h > 0) {
+      return `${h}h ${m}min`;
+    }
+    return `${m} min`;
+  };
+
+
   const handleFilterChange = (setter, value) => {
     setter(value);
   };
@@ -31,25 +43,25 @@ export default function DistanceCalculator() {
       const data = await calculateDistances(origin, destination)
       console.log("Distance data:", data)
       setDistance(data)
-    }catch (error) {
+    } catch (error) {
       setError("Error al calcular la distancia. Por favor, inténtelo de nuevo más tarde.")
     }
-    
+
     setIsLoading(false)
   }
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Calculador de distancia</h1>
-        <p className="mt-2 text-lg text-gray-600">Calcular la distancia entre dos puntos</p>
+        <h1 className="text-3xl font-bold text-gray-900">Calculador de trayecto</h1>
+        <p className="mt-2 text-lg text-gray-600">Calcular el tiempo entre dos puntos</p>
       </div>
 
       <Card className="shadow-lg">
         <CardHeader>
-          <CardTitle className="flex items-center">
+          <CardTitle className="flex items-center pb-2">
             <Calculator className="mr-2 h-5 w-5 " />
-            Calcular distancia
+            Calcular tiempo de viaje
           </CardTitle>
           <CardDescription>Introduzca el origen y destino para calcular el tiempo entre ellos.</CardDescription>
         </CardHeader>
@@ -108,39 +120,58 @@ export default function DistanceCalculator() {
                 <CardContent className="pt-6">
                   <h3 className="text-lg font-medium text-gray-900 mb-4">Resultados</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                       <div className="text-sm text-gray-500">Metro</div>
-                      <div className="text-2xl font-bold text-green-600">{distance.metro}</div>
+                      <div className="text-2xl font-bold text-green-600">
+                        {formatDuration(distance.metro)}
+                      </div>
                     </div>
+
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                       <div className="text-sm text-gray-500">Autobús</div>
-                      <div className="text-2xl font-bold text-green-600">{distance.autobus}</div>
+                      <div className="text-2xl font-bold text-green-600">
+                        {formatDuration(distance.autobus)}
+                      </div>
                     </div>
+
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                       <div className="text-sm text-gray-500">Tranvía</div>
-                      <div className="text-2xl font-bold text-green-600">{distance.tranvia}</div>
+                      <div className="text-2xl font-bold text-green-600">
+                        {formatDuration(distance.tranvia)}
+                      </div>
                     </div>
+
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                       <div className="text-sm text-gray-500">Taxi</div>
-                      <div className="text-2xl font-bold text-green-600">{distance.taxi}</div>
+                      <div className="text-2xl font-bold text-green-600">
+                        {formatDuration(distance.taxi)}
+                      </div>
                     </div>
+
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                       <div className="text-sm text-gray-500">Coche compartido</div>
-                      <div className="text-2xl font-bold text-green-600">{distance.cocheCompartido}</div>
+                      <div className="text-2xl font-bold text-green-600">
+                        {formatDuration(distance.cocheCompartido)}
+                      </div>
                     </div>
+
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                       <div className="text-sm text-gray-500">Bicicleta</div>
-                      <div className="text-2xl font-bold text-green-600">{distance.bicicleta}</div>
+                      <div className="text-2xl font-bold text-green-600">
+                        {formatDuration(distance.bicicleta)}
+                      </div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
             )}
+
           </div>
         </CardContent>
         <CardFooter>
           <Button onClick={calculateDistance} disabled={isLoading} className="w-full border-[0.5px] border-green-300 py-2 hover:bg-green-100">
-            {isLoading ? "Calculating..." : "Calcular distancia"}
+            {isLoading ? "Calculando..." : "Calcular tiempo"}
           </Button>
         </CardFooter>
       </Card>

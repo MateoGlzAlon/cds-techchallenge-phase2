@@ -2,27 +2,8 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { MapPin, Star, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Hotel,
-  MapPin,
-  Star,
-  Wifi,
-  Coffee,
-  Utensils,
-  Search,
-  Dumbbell,
-  PocketIcon as Pool,
-} from "lucide-react";
-import { DATA } from "@/app/data";
 import { useState, useEffect } from "react";
 import { getAllHotels } from "@/api/services";
 
@@ -33,6 +14,8 @@ export default function Hotels() {
   const [hotels, setAllHotels] = useState([]);
   const [filteredHotels, setFilteredHotels] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
 
   const handleFilterChange = (setter, value) => {
     setter(value);
@@ -45,8 +28,6 @@ export default function Hotels() {
         const hotelsData = await getAllHotels();
         setAllHotels(hotelsData);
         setFilteredHotels(hotelsData);
-        console.log(hotelsData);
-        console.log("hotels", hotels);
       } catch (err) {
         console.error("Error fetching hotel:", err);
       } finally {
@@ -85,8 +66,28 @@ export default function Hotels() {
       return matchesPrice && matchesRating && matchesSearch;
     });
 
+    setCurrentPage(1);
     setFilteredHotels(filtered);
   }, [priceFilter, ratingFilter, searchQuery, hotels]);
+
+  // Calculate pagination data
+  const totalPages = Math.ceil(filteredHotels.length / itemsPerPage);
+  const currentHotels = filteredHotels.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
@@ -94,7 +95,7 @@ export default function Hotels() {
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Buscar Hoteles</h1>
           <p className="mt-2 text-lg text-gray-600">
-          Descubre el lugar perfecto para alojarte durante tu viaje
+            Descubre el lugar perfecto para alojarte durante tu viaje
           </p>
         </div>
       </div>
@@ -176,7 +177,7 @@ export default function Hotels() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredHotels.map((hotel) => (
+          {currentHotels.map((hotel) => (
             <Card
               key={hotel.id}
               className="overflow-hidden hover:shadow-lg transition-shadow"
@@ -231,6 +232,29 @@ export default function Hotels() {
           ))}
         </div>
       )}
+
+      {/* Pagination Buttons */}
+      <div className="flex justify-between items-center py-6  ">
+        <Button
+          variant="outline"
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+          className="px-4 py-2 border-2 border-gray-300"
+        >
+          Anterior
+        </Button>
+        <span className="text-gray-600">
+          Página {currentPage} de {totalPages}
+        </span>
+        <Button
+          variant="outline"
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 border-2 border-gray-300"
+        >
+          Siguiente
+        </Button>
+      </div>
     </div>
   );
 }

@@ -5,39 +5,19 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Map,
-  Clock,
-  Users,
-  Star,
-  Heart,
-  Share2,
-  MessageSquare,
-  MapPin,
-  Calendar,
-  Info,
-  Calculator,
-} from "lucide-react";
-import { DATA } from "@/app/data";
+import { Star, Map, Clock, MapPin } from "lucide-react";
 import { getRouteById } from "@/api/services";
 
 export default function RouteDetails() {
-  const params = useParams(); // Using Next.js useParams hook
-  const [routeId, setRouteId] = useState(null);
-  const [route, setRoute] = useState();
+  const params = useParams();
+  const [route, setRoute] = useState(null);
 
   useEffect(() => {
     const fetchRoute = async () => {
       if (params?.id) {
-        setRouteId(params.id);
-
         try {
           const routeData = await getRouteById(params.id);
           setRoute(routeData);
-          console.log(routeData);
-          console.log("route", routeData);
         } catch (err) {
           console.error("Error fetching route:", err);
         }
@@ -45,11 +25,7 @@ export default function RouteDetails() {
     };
 
     fetchRoute();
-    console.log("route", route);
   }, [params]);
-
-  const [isJoined, setIsJoined] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
 
   if (!route) {
     return (
@@ -61,6 +37,7 @@ export default function RouteDetails() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
+      {/* Back Link */}
       <div className="mb-6">
         <Link
           href="/routes"
@@ -71,8 +48,11 @@ export default function RouteDetails() {
         </Link>
       </div>
 
+      {/* Grid Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Left: Route Content */}
         <div className="lg:col-span-2">
+          {/* Image */}
           <div className="rounded-lg overflow-hidden mb-6">
             <img
               src={route.image || `/routes/ruta${route.id}.jpg`}
@@ -81,34 +61,44 @@ export default function RouteDetails() {
             />
           </div>
 
+          {/* Title & Info */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">
                 {route.routeName}
               </h1>
-              <div className="flex items-center mt-2">
+
+              <div className="flex items-center mt-2 space-x-4 text-sm text-gray-600">
                 <div className="flex items-center">
                   <Star className="h-5 w-5 text-yellow-500 mr-1" />
-                  <span className="font-medium">
-                    {(route.popularity / 10)?.toFixed(1)}
-                  </span>
+                  <span>{(route.popularity / 10).toFixed(1)}</span>
                 </div>
-                <span className="mx-2 text-gray-300">•</span>
                 <div className="flex items-center">
-                  <span>Origen: {route.origin.name} </span>
+                  <MapPin className="h-4 w-4 mr-1 text-gray-400" />
+                  <span>Origen: {route.origin?.name}</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <h2 className="text-2xl mb-8">Resumen</h2>
+          {/* Summary */}
+          <h2 className="text-2xl font-semibold mb-4">Resumen</h2>
 
-          <div className="prose max-w-none mb-6">{route.description}</div>
+          <div className="text-gray-700 mb-6">{route.description}</div>
 
-          <div className="prose max-w-none">
-            <p className="text-gray-700">
-              {route.distanceKm} km, {route.durationHours} h
-            </p>
+          <div className="flex items-center space-x-6 text-gray-600">
+            <div className="flex items-center">
+              <Map className="h-5 w-5 mr-2 text-gray-400" />
+              <span>{route.distanceKm} km</span>
+            </div>
+            <div className="flex items-center">
+              <Clock className="h-5 w-5 mr-2 text-gray-400" />
+              <span>{route.durationHours} h</span>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-6 text-gray-600 py-5">
+            {route.description || "Sin descripción"}
           </div>
         </div>
       </div>

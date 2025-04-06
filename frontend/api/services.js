@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_URL = "http://localhost:5000/api/v1"
+const API_URL = "http://neo4j:5000/api/v1"
 
 export const getHotelByName = async (nameHotel) => {
   try {
@@ -117,7 +117,7 @@ export const createRoute = async (route) => {
 export const calculateDistances = async (origen, destino) => {
   try {
     const response = await axios.get(`${API_URL}/distance/getAllTrayectories`, {
-      params: { origin : origen, destination: destino }
+      params: { origin: origen, destination: destino }
     })
     return response.data
   } catch (error) {

@@ -65,7 +65,7 @@ export default function Home() {
                 </h3>
                 <p className="mt-2 text-sm text-gray-500">
                   Calcula las distancias entre destinos para planificar tu viaje
-                  de manera eficaz.
+                  de manera eficaz en diferentes medios de transporte.
                 </p>
                 <Link
                   href="/distance-calculator"
@@ -82,17 +82,16 @@ export default function Home() {
                   <Map className="h-6 w-6 text-green-600" />
                 </div>
                 <h3 className="text-lg font-medium text-gray-900">
-                  Rutas Comunitarias
+                  Rutas
                 </h3>
                 <p className="mt-2 text-sm text-gray-500">
-                  Crea y únete a rutas comunitarias para descubrir gemas
-                  escondidas y favoritos locales.
+                  Muévete como un local: descubre rutas increíbles y los lugares favoritos que solo los locales conocen.
                 </p>
                 <Link
-                  href="/community"
+                  href="/routes"
                   className="mt-4 text-green-600 hover:text-green-800 text-sm font-medium"
                 >
-                  Explorar Comunidad →
+                  Explorar rutas →
                 </Link>
               </CardContent>
             </Card>

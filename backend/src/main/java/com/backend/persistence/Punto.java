@@ -30,7 +30,6 @@ public class Punto {
     @Property("nombre")
     private String name;
 
-    @JsonIgnore
     @Relationship(type = "INICIO", direction = Relationship.Direction.OUTGOING)
     @JsonBackReference("punto-origin")
     private Route ruta;
