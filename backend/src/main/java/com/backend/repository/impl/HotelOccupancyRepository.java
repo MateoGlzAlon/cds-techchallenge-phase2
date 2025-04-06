@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.backend.persistence.HotelOccupancy;
 
 @Repository
-public interface HotelOccupancyRepository extends Neo4jRepository<HotelOccupancy, UUID> {
+public interface HotelOccupancyRepository extends Neo4jRepository<HotelOccupancy, Long> {
     HotelOccupancy findByDate(LocalDate date);
     HotelOccupancy findByOccupancyRate(double occupancyRate);
     HotelOccupancy findByConfirmedBookings(int confirmedBookings);
