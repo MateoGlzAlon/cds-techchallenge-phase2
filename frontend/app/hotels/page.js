@@ -17,7 +17,7 @@ export default function Hotels() {
   const [hotels, setHotels] = useState([]);
 
   const handleFilterChange = (setter, value) => {
-    setter(value);
+    setter(value)
   };
 
   useEffect(() => {

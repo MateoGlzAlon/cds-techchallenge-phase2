@@ -1,5 +1,5 @@
 export const DATA = {
-    appName: "TBD",
+    appName: "GreenGuide",
 
     mockRouteEvents: [
         {

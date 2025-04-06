@@ -64,7 +64,6 @@ export default function DistanceCalculator() {
                   <select
                     className="pl-10 w-full p-3 bg-white border border-gray-300 rounded-md shadow-sm text-sm hover:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
                     value={origin}
-                    key={origin}
                     onChange={(e) => handleFilterChange(setOrigin, e.target.value)}
                   >
                     {DATA.locations.map((location, index) => (
