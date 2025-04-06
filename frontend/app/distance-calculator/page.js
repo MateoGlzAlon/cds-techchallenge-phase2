@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Calculator, MapPin, ArrowRight } from "lucide-react"
 import { DATA } from '@/app/data'
+import { calculateDistances } from "@/api/services"
 
 export default function DistanceCalculator() {
   const [origin, setOrigin] = useState("")
@@ -18,44 +19,46 @@ export default function DistanceCalculator() {
     setter(value);
   };
 
-  const calculateDistance = () => {
+  const calculateDistance = async () => {
     if (!origin || !destination) {
-      setError("Please enter both origin and destination")
+      setError("Por favor, introduzca tanto el origen como el destino.")
       return
     }
 
     setIsLoading(true)
     setError("")
-
-    setDistance({
-      kilometers: 0,
-      estimatedDriveTime: 0,
-      vehicleType: ""
-    })
+    try {
+      const data = await calculateDistances(origin, destination)
+      console.log("Distance data:", data)
+      setDistance(data)
+    }catch (error) {
+      setError("Error al calcular la distancia. Por favor, inténtelo de nuevo más tarde.")
+    }
+    
     setIsLoading(false)
   }
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Distance Calculator</h1>
-        <p className="mt-2 text-lg text-gray-600">Calculate the distance between any two locations</p>
+        <h1 className="text-3xl font-bold text-gray-900">Calculador de distancia</h1>
+        <p className="mt-2 text-lg text-gray-600">Calcular la distancia entre dos puntos</p>
       </div>
 
       <Card className="shadow-lg">
         <CardHeader>
           <CardTitle className="flex items-center">
             <Calculator className="mr-2 h-5 w-5 " />
-            Calculate Distance
+            Calcular distancia
           </CardTitle>
-          <CardDescription>Enter the origin and destination to calculate the distance between them.</CardDescription>
+          <CardDescription>Introduzca el origen y destino para calcular el tiempo entre ellos.</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1">
                 <label htmlFor="origin" className="block text-sm font-medium text-gray-700 mb-1">
-                  Origin
+                  Origen
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -79,7 +82,7 @@ export default function DistanceCalculator() {
 
               <div className="flex-1">
                 <label htmlFor="destination" className="block text-sm font-medium text-gray-700 mb-1">
-                  Destination
+                  Destino
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -103,19 +106,31 @@ export default function DistanceCalculator() {
             {distance && (
               <Card className="mt-6 bg-green-50">
                 <CardContent className="pt-6">
-                  <h3 className="text-lg font-medium text-gray-900 mb-4">Distance Results</h3>
+                  <h3 className="text-lg font-medium text-gray-900 mb-4">Resultados</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="bg-white p-4 rounded-lg shadow-sm">
-                      <div className="text-sm text-gray-500">Distance (km)</div>
-                      <div className="text-2xl font-bold text-green-600">{distance.kilometers} km</div>
+                      <div className="text-sm text-gray-500">Metro</div>
+                      <div className="text-2xl font-bold text-green-600">{distance.metro}</div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow-sm">
-                      <div className="text-sm text-gray-500">Distance (miles)</div>
-                      <div className="text-2xl font-bold text-green-600">{distance.miles} mi</div>
+                      <div className="text-sm text-gray-500">Autobús</div>
+                      <div className="text-2xl font-bold text-green-600">{distance.autobus}</div>
                     </div>
                     <div className="bg-white p-4 rounded-lg shadow-sm">
-                      <div className="text-sm text-gray-500">Est. Drive Time</div>
-                      <div className="text-2xl font-bold text-green-600">{distance.estimatedDriveTime}</div>
+                      <div className="text-sm text-gray-500">Tranvía</div>
+                      <div className="text-2xl font-bold text-green-600">{distance.tranvia}</div>
+                    </div>
+                    <div className="bg-white p-4 rounded-lg shadow-sm">
+                      <div className="text-sm text-gray-500">Taxi</div>
+                      <div className="text-2xl font-bold text-green-600">{distance.taxi}</div>
+                    </div>
+                    <div className="bg-white p-4 rounded-lg shadow-sm">
+                      <div className="text-sm text-gray-500">Coche compartido</div>
+                      <div className="text-2xl font-bold text-green-600">{distance.cocheCompartido}</div>
+                    </div>
+                    <div className="bg-white p-4 rounded-lg shadow-sm">
+                      <div className="text-sm text-gray-500">Bicicleta</div>
+                      <div className="text-2xl font-bold text-green-600">{distance.bicicleta}</div>
                     </div>
                   </div>
                 </CardContent>
@@ -125,33 +140,10 @@ export default function DistanceCalculator() {
         </CardContent>
         <CardFooter>
           <Button onClick={calculateDistance} disabled={isLoading} className="w-full border-[0.5px] border-green-300 py-2 hover:bg-green-100">
-            {isLoading ? "Calculating..." : "Calculate Distance"}
+            {isLoading ? "Calculating..." : "Calcular distancia"}
           </Button>
         </CardFooter>
       </Card>
-
-      <div className="mt-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Popular Routes</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {DATA.popularRoutes.map((route, index) => (
-            <Card key={index} className="hover:shadow-md transition-shadow text-center">
-              <CardContent className="p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <div className="font-medium">{route.from}</div>
-                  <ArrowRight className="h-4 w-4 text-gray-400" />
-                  <div className="font-medium">{route.to}</div>
-                </div>
-                <div className="text-sm text-gray-500">
-                  Distance: <span className="font-semibold text-gray-700">{route.distance} min</span>
-                </div>
-                <Button variant="outline" size="sm" className="mt-4 w-full py-2">
-                  View Details
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
     </div>
   )
 }

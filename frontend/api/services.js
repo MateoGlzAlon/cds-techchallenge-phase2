@@ -113,3 +113,15 @@ export const createRoute = async (route) => {
     throw error
   }
 }
+
+export const calculateDistances = async (origen, destino) => {
+  try {
+    const response = await axios.get(`${API_URL}/distance/getAllTrayectories`, {
+      params: { origin : origen, destination: destino }
+    })
+    return response.data
+  } catch (error) {
+    console.error("Error en calculateDistance:", error)
+    throw error
+  }
+}
