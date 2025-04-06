@@ -7,7 +7,7 @@ on:
       - completed
 
 jobs:
-  cypress-tests:
+  build-frontend:
     runs-on: ubuntu-latest    
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
@@ -21,6 +21,6 @@ jobs:
 
       - name: Build and Serve Frontend
         run: |
-          cd ui
+          cd frontend
           npm install
           npm run build
