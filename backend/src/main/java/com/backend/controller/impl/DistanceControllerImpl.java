@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.controller.IDistanceController;
 import com.backend.persistence.Trayecto;
+import com.backend.persistence.Option;
 import com.backend.service.impl.DistanceService;
 
 import java.util.List;
@@ -32,8 +33,9 @@ public class DistanceControllerImpl implements IDistanceController {
      */
     @Override
     @GetMapping("/getAllTrayectories")
-    public ResponseEntity<List<Trayecto>> getAllTrayectories(@RequestParam String origin,
+    public ResponseEntity<Option> getAllTrayectories(@RequestParam String origin,
             @RequestParam String destination) {
+        System.out.println("Origin: " + origin + " Destination: " + destination);
         return ResponseEntity.ok(distanceCalculatorService.getAllTrayectories(origin, destination));
     }
 

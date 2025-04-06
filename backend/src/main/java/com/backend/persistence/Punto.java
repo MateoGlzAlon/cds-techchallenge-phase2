@@ -8,6 +8,8 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
 import org.springframework.data.neo4j.core.schema.Relationship;
 import com.backend.persistence.Route;
+import com.backend.persistence.Option;
+
 
 import lombok.*;
 
@@ -28,4 +30,8 @@ public class Punto {
     @Relationship(type = "INICIO", direction = Relationship.Direction.OUTGOING)
     @JsonBackReference("punto-origin")
     private Route ruta;
+
+    @Relationship(type = "OPCIONES", direction = Relationship.Direction.INCOMING)
+    @JsonManagedReference("punto-opciones")
+    private Option opciones;
 }

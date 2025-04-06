@@ -30,7 +30,7 @@ public class RoutesService {
         Punto origen = route.getOrigin();
         System.out.println("Origen: " + origen.toString());
 
-        Optional<Punto> punto = location.findByName(origen.getName());
+        Optional<Punto> punto = locationRepository.findByName(origen.getName());
 
         if (punto.isPresent()) {
             origen = punto.get();

@@ -3,7 +3,7 @@ import pandas as pd
 from tqdm import tqdm
 
 # Configuración de conexión a Neo4j
-URI = "bolt://localhost:7687"
+URI = "bolt://neo4j:7687"
 USER = "neo4j"
 PASSWORD = "12345678"
 

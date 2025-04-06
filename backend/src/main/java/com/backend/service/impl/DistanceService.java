@@ -7,14 +7,15 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.backend.persistence.Trayecto;
+import com.backend.persistence.Option;
 import com.backend.repository.impl.TrayectoRepository;
+import com.backend.repository.impl.LocationRepository;
 
 @Service
 public class DistanceService {
 
     @Autowired
-    private TrayectoRepository trayectoRepository;
+    private LocationRepository locationRepository;
 
     public Map<String, Integer> calculateDistance(String locationOne, String locationTwo) {
         HashMap<String, Integer> result = new HashMap<>();
@@ -24,15 +25,10 @@ public class DistanceService {
         return result;
     }
 
-    public List<Trayecto> getAllTrayectories(String origin, String destination) {
-        List<Trayecto> trayectos = trayectoRepository.findTrayectosBetweenCities("Aruba Central", "Ezmeral Valley");
-
-        if (trayectos.isEmpty()) {
-            System.out.println("No hay trayectos entre " + origin + " y " + destination);
-        } else {
-            System.out.println("Trayectos: " + trayectos.toString());
-        }
-        return null;
+    public Option getAllTrayectories(String origin, String destination) {
+        Option opciones = locationRepository.findByNombreWithOptions(origin, destination);
+        System.out.println("Opciones: " + opciones.toString());
+        return opciones;
 
     }
 
