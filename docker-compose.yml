@@ -47,8 +47,6 @@ services:
     networks:
       - mynetwork
 
-
-
 volumes:
   datos:
   neo4j_data:
